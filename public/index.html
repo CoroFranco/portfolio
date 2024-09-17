@@ -12,12 +12,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
-<body class="bg-gray-900 text-white">
+<body class="bg-gray-900 text-white overflow-x-hidden">
     <div id="background-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
-    <header id="nave" class="fixed">
-        <nav class="nav top-0 left-0 w-screen bg-gray-900 bg-opacity-90 py-4 z-50">
+    <header id="nave" class="fixed z-50 top-0 left-0 w-full">
+        <nav class="nav flex bg-gray-900 bg-opacity-90 py-4">
             <ul
-                class="text-[1rem] w-full flex justify-center m-auto space-x-3 flex-wrap [&>li:hover]:cursor-pointer [&>li:hover]:text-blue-400 [&>li:hover]:-translate-y-[2px] [&>li]:transition-transform [&>li>a]:px-4">
+                class="text-[1.1rem] flex justify-center m-auto md:space-x-3 [&>li:hover]:cursor-pointer [&>li:hover]:text-blue-400 [&>li:hover]:-translate-y-[2px] [&>li]:transition-transform [&>li>a]:md:px-4 [&>li>a]:px-2">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -27,87 +27,82 @@
         </nav>
         <div id="menu-backdrop"
             class="-z-10 absolute bg-white backdrop-blur-lg rounded left-[var(--left)] top-[var(--top)] w-[var(--width)] h-[var(--height)] transition-all duration-200 ease-linear">
-
         </div>
     </header>
 
     <main class="">
         <section id="home" class="h-screen flex place-items-center justify-center ">
             <div class="text-center">
-                <h1 id="typewriter" class="text-[2.5rem] font-bold "></h1>
+                <div id="mainImage" class="flex-none w-[200px] h-[200px] rounded-full overflow-hidden m-auto mb-5">
+                    <img class="w-full h-full object-cover" style="object-position: 73% 20%;" alt="Foto de persona"
+                        src="img/foto1.png">
+                </div>
+                <a href="https://www.linkedin.com/in/jhoan-sebastian-alzate-franco-a05053314/" target="_blank"
+                    rel="noopener" class="flex items-center transition justify-center md:hover:scale-105 mb-5">
+                    <div class="text-[0.8rem]">
+                        <span class="relative inline-flex overflow-hidden rounded-full p-[1px]"> <span
+                                class="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_60deg_at_50%_50%,#6CADD9_0%,#21554E_50%,#6CCFD9_100%)] duration-700"></span>
+                            <div
+                                class="inline-flex items-center justify-center w-full px-3 py-1 bg-transparent rounded-full cursor-pointer backdrop-blur-3xl whitespace-nowrap">
+                                Open to work</div>
+                        </span>
+                    </div>
+                </a>
+                <h1 class="text-[2.5rem] font-bold md:block flex flex-col">Hey!, I'm <span id="typewriter"
+                        class="text-cyan-500"></span></h1>
                 <p id="profesion" class="text-[1.2rem] opacity-50">Fullstack Developer</p>
             </div>
         </section>
 
-        <section id="about" class="bg-gray-800 bg-opacity-60 py-20 px-40 overflow-hidden">
-            <div class="max-w-[1200px] w-[95%] m-auto mx-auto px-6">
-                <h2 class="text-center text-[2rem] font-bold mb-20">About Me</h2>
-                <div class="w-1/2 ml-auto">
-                    <p class="aboutme">
-                        I'm a passionate fullstack developer with a keen eye for design and a love for clean, efficient
-                        code. With years of experience in both front-end and back-end technologies, I bring ideas to
-                        life
-                        through innovative web applications.<br><br>
+        <section id="about" class="bg-gray-800 bg-opacity-60 py-20">
+            <div class="max-w-[900px] w-[95%] m-auto mx-auto px-6">
+                <h2 class="text-center text-[2rem] font-bold mb-10">About Me</h2>
+                <div
+                    class="flex flex-col md:flex-row space-y-10 md:space-y-0 place-items-center md:space-x-20 justify-center">
 
-                        When I'm not coding, you can find me exploring new technologies, contributing to open-source
-                        projects, or sharing my knowledge through tech blogs and community meetups.</p>
+                    <div class="flex-none w-[200px] h-[200px] rounded-full overflow-hidden ">
+                        <img class="w-full h-full object-cover" style="object-position: 60% 20%;" alt="Foto de persona"
+                            src="img/foto2.png">
+                    </div>
+
+
+                    <div class="">
+
+                        <p class="aboutme text-pretty">I'm a passionate fullstack developer with a keen eye for design
+                            and a love for clean, efficient
+                            code. With years of experience in both front-end and back-end technologies, I bring ideas to
+                            life
+                            through innovative web applications.
+
+                            When I'm not coding, you can find me exploring new technologies, contributing to open-source
+                            projects, or sharing my knowledge through tech blogs and community meetups.</p>
+                    </div>
                 </div>
+
 
             </div>
         </section>
 
-        <section id="skills ">
+        <section id="skills">
             <div class="py-20 max-w-[600px] w-[95%] m-auto">
                 <h2 class="text-center text-[2rem] font-bold mb-20">Skills</h2>
-                <div class="grid grid-cols-2">
+                <div class="md:grid md:grid-cols-2">
 
                     <!--  inicio seccion de skills -->
 
-                    <div class="skills flex flex-col place-items-center space-y-4">
-                        <h3>Frontend</h3>
-                        <div
-                            class="grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div class="">
-
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="40" height="40"
-                                    aria-label="HTML5 icon">
-                                    <path fill="#E44D26"
-                                        d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z" />
-                                    <path fill="#F16529" d="M64 116.8l36.378-10.086 8.559-95.878H64z" />
-                                    <path fill="#EBEBEB"
-                                        d="M64 52.455H45.788L44.53 38.361H64V24.599H29.489l.33 3.692 3.382 37.927H64zm0 35.743l-.061.017-15.327-4.14-.979-10.975H33.816l1.928 21.609 28.193 7.826.063-.017z" />
-                                    <path fill="#fff"
-                                        d="M63.952 52.455v13.763h16.947l-1.597 17.849-15.35 4.143v14.319l28.215-7.82.207-2.325 3.234-36.233.335-3.696h-3.708zm0-27.856v13.762h33.244l.276-3.092.628-6.978.329-3.692z" />
-                                </svg>
+                    <div class="skills flex flex-col place-items-center space-y-10">
+                        <h3 class="text-[2rem] text-[#eba4f3]">Frontend</h3>
+                        <div class=" grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
+                            <div>
+                                <img src="./img/svgs/html.svg" alt="logo html">
                                 <p>html</p>
                             </div>
                             <div>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="40" height="40"
-                                    aria-label="JavaScript icon">
-                                    <path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z" />
-                                    <path fill="#323330"
-                                        d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z" />
-                                </svg>
+                                <img src="img/svgs/js.svg" alt="logo js">
                                 <p>JavaScript</p>
                             </div>
                             <div>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="40" height="40"
-                                    aria-label="CSS3 icon">
-                                    <path fill="#1572B6"
-                                        d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z" />
-                                    <path fill="#33A9DC"
-                                        d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z" />
-                                    <path fill="#fff"
-                                        d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z" />
-                                    <path fill="#EBEBEB"
-                                        d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z" />
-                                    <path fill="#fff"
-                                        d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z" />
-                                    <path fill="#EBEBEB"
-                                        d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.996v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711h16.447z" />
-                                </svg>
+                                <img src="img/svgs/css.svg" alt="logo css">
                                 <p>Css</p>
                             </div>
                             <div>
@@ -148,8 +143,8 @@
 
                     <!--  inicio seccion de skills -->
 
-                    <div class="skills flex flex-col place-items-center space-y-4">
-                        <h3>Backend</h3>
+                    <div class="skills flex flex-col place-items-center space-y-10">
+                        <h3 class="text-[2rem] text-[#a4e3f3]">Backend</h3>
                         <div
                             class="grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
                             <div class="">
@@ -293,11 +288,18 @@
 
         gsap.registerPlugin(ScrollTrigger);
 
+        gsap.fromTo('#mainImage', {
+            opacity: 0
+        }, {
+            duration: 0.6,
+            opacity: 1
+        })
+
         gsap.to("#typewriter", {
             scrollTrigger: {
                 trigger: "body",
-                start: "100px",
-                end: "500px",
+                start: "150px",
+                end: "800px",
                 scrub: true,
             },
             duration: 2,
@@ -314,10 +316,11 @@
             scrollTrigger: {
                 trigger: 'body',
                 start: "250",
-                end: "550px",
-                scrub: true
+                toggleActions: 'restart reset restart reset',
+                onLeave: () => gsap.set(".aboutme", { y: 40, opacity: 0 }),
+                onEnterBack: () => gsap.to(".aboutme", { y: 0, opacity: 1 })
             },
-            duration: 3,
+            duration: 1,
             x: '0%',
             opacity: 1
         });
@@ -364,8 +367,7 @@
                     scrollTrigger: {
                         trigger: 'body',
                         start: '750px',
-                        end: '950px',
-                        toggleActions: 'restart reset restart reset', 
+                        toggleActions: 'restart reset restart reset',
                         onLeave: () => gsap.set(skill, { y: 40, opacity: 0 }),
                         onEnterBack: () => gsap.to(skill, { y: 0, opacity: 1 })
                     },
@@ -377,12 +379,15 @@
         })
 
 
-        document.querySelectorAll('a').forEach(a => {
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
