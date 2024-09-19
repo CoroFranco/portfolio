@@ -13,7 +13,7 @@
 </head>
 
 <body class="bg-gray-900 text-white overflow-x-hidden">
-    <div id="background-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
+    <div id="background-container" class="fixed top-0 left-0 w-[50px] h-full -z-10"></div>
     <header id="nave" class="fixed z-50 top-0 left-0 w-full">
         <nav class="nav flex bg-gray-900 bg-opacity-90 py-4">
             <ul
@@ -26,7 +26,7 @@
             </ul>
         </nav>
         <div id="menu-backdrop"
-            class="-z-10 absolute bg-white backdrop-blur-lg rounded left-[var(--left)] top-[var(--top)] w-[var(--width)] h-[var(--height)] transition-all duration-200 ease-linear">
+            class="-z-10 fixed  bg-white backdrop-blur-lg rounded left-[var(--left)] top-[var(--top)] w-[var(--width)] h-[var(--height)] transition-all duration-200 ease-linear">
         </div>
     </header>
 
@@ -63,7 +63,7 @@
             </div>
         </section>
 
-        <section id="projects" class="bg-gray-800 bg-opacity-60 py-16 flex flex-col space-y-16">
+        <section id="projects" class="bg-gray-800 bg-opacity-60 py-16 flex flex-col space-y-16 max-w-[1200px] w-[95%] m-auto">
             <div class="flex justify-center gap-2 font-bold text-[2rem] place-items-center ">
                 <svg class="size-7 text-cyan-500" xmlns="http://www.w3.org/2000/svg" width="34" height="34"
                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -79,13 +79,13 @@
             <!-- Aqui Empieza Proyecto -->
 
             <div class="max-w-600 w-[95%] m-auto">
-                <div class="flex justify-center w-full space-x-10 ">
-                    <div class="w-[400px]  overflow-hidden rounded-xl border-[4px] cursor-pointer border-[#0a0427]">
+                <div class="flex md:flex-row flex-col justify-center w-full space-y-4 md:space-y-0 place-items-center space-x-0 md:space-x-10 ">
+                    <div class="max-w-[400px]  overflow-hidden rounded-xl border-[4px] cursor-pointer border-[#0a0427]">
                         <video muted loop class="videos opacity-0 scale-[1.5] transition-all duration-500 "
                             src="videos/este.webm"></video>
                     </div>
 
-                    <div class="max-w-[300px] flex flex-col project-info">
+                    <div class="max-w-[300px] flex flex-col gap-2 project-info m-auto">
                         <h3 class="text-[1.3rem] font-bold">Portfolio, Gallery, Artist Page</h3>
                         <ul class="flex my-2 space-x-2">
                             <li><span
@@ -135,13 +135,13 @@
             <!-- Aqui Empieza Proyecto -->
 
             <div class="max-w-600 w-[95%] m-auto">
-                <div class="flex justify-center w-full space-x-10 ">
-                    <div class="w-[400px]  overflow-hidden rounded-xl border-[4px] cursor-pointer border-[#0a0427]">
+                <div class="flex md:flex-row md:space-y-0 space-y-4 flex-col justify-center place-items-center w-full space-x-0 md:space-x-10 ">
+                    <div class="max-w-[400px]  overflow-hidden rounded-xl border-[4px] cursor-pointer border-[#0a0427]">
                         <video muted loop class="videos opacity-0 scale-[1.5]  transition-all duration-500 "
                             src="videos/aqui.webm"></video>
                     </div>
 
-                    <div class="max-w-[300px] flex flex-col project-info">
+                    <div class="max-w-[300px] flex flex-col gap-2 project-info m-auto">
                         <h3 class="text-[1.3rem] font-bold">Nimi Platform</h3>
                         <ul class="flex my-2 space-x-2">
                             <li><span

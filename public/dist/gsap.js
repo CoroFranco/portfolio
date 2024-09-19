@@ -35,23 +35,23 @@ document.querySelectorAll('.videos').forEach(function (video) {
             opacity: 1
         })
 
-        gsap.to("#typewriter", {
-            scrollTrigger: {
-                trigger: "body",
-                start: "150px",
-                end: "800px",
-                scrub: true,
-            },
-            duration: 2,
-            letterSpacing: "50px",
-            opacity: 0,
-            ease: "power2.inOut",
-            yoyo: true
-        });
+        // gsap.to("#typewriter", {
+        //     scrollTrigger: {
+        //         trigger: "body",
+        //         start: "150px",
+        //         end: "800px",
+        //         scrub: true,
+        //     },
+        //     duration: 2,
+        //     letterSpacing: "50px",
+        //     opacity: 0,
+        //     ease: "power2.inOut",
+        //     yoyo: true
+        // });
 
         document.querySelectorAll('.project-info').forEach(function(project){
             gsap.fromTo(project, {
-            x: 100, // Inicialmente fuera de vista a la derecha
+            y: 40, // Inicialmente fuera de vista a la derecha
             opacity: 0
         }, {
             scrollTrigger: {
@@ -62,14 +62,14 @@ document.querySelectorAll('.videos').forEach(function (video) {
                 onEnterBack: () => gsap.to(project, { y: 0, opacity: 1 })
             },
             duration: 0.5,
-            x: '0%',
+            y: '0%',
             opacity: 1
         });
         })
 
 
         gsap.fromTo('.aboutme', {
-            x: 100, // Inicialmente fuera de vista a la derecha
+            y: 40, // Inicialmente fuera de vista a la derecha
             opacity: 0
         }, {
             scrollTrigger: {
@@ -79,7 +79,7 @@ document.querySelectorAll('.videos').forEach(function (video) {
                 onEnterBack: () => gsap.to(".aboutme", { y: 0, opacity: 1 })
             },
             duration: 1,
-            x: '0%',
+            y: '0%',
             opacity: 1
         });
 
@@ -137,6 +137,6 @@ document.querySelectorAll('.videos').forEach(function (video) {
 
 
         gsap.to('.linkedin', {
-            duration: 6,
+            duration: 4,
             opacity: 1
         })
