@@ -13,12 +13,12 @@ document.querySelectorAll('.videos').forEach(function (video) {
     })
 
     video.addEventListener('mouseenter', function () {
-        console.log(video)
+
         video.play();
         video.classList.remove('scale-[1.5]');
     })
     video.addEventListener('mouseleave', function () {
-        console.log(video)
+
         video.classList.add('scale-[1.5]');
         video.pause();
         video.currentTime = 0;
