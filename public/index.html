@@ -5,12 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:title" content="Jhoan Alzate's Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jhoan Alzate — Software Developer" />
     <meta property="og:image" content="https://jhoan-alzate.netlify.app/img/port.jpg" />
     <meta property="og:description"
-        content="Full Stack developer in training with experience in web applications. Skilled in frontend and backend development, committed to continuous learning and innovative solutions." />
+        content="Software developer with over a year and a half orchestrating processes across systems for banking, insurance and health. Backend integrations (OSB/OIC, Node.js) and clean, functional React interfaces." />
     <meta property="og:url" content="https://jhoan-alzate.netlify.app/" />
-    <title>Jhoan Alzate Portfolio</title>
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jhoan Alzate — Software Developer" />
+    <meta name="twitter:description"
+        content="Backend integrations (OSB/OIC, Node.js) and clean, functional React interfaces for banking, insurance and health." />
+    <meta name="twitter:image" content="https://jhoan-alzate.netlify.app/img/port.jpg" />
+
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
+    <title>Jhoan Alzate — Software Developer</title>
     <link rel="stylesheet" href="dist/output.css">
     <link rel="stylesheet" href="styles.css">
 
@@ -67,10 +76,11 @@
         <section id="home" class="h-screen flex place-items-center justify-center ">
             <div class="text-center">
                 <div id="mainImage" class="flex-none w-[200px] h-[200px] rounded-full overflow-hidden m-auto mb-5">
-                    <img class="w-full h-full object-cover" style="object-position: 73% 20%;" alt="Foto de persona"
-                        src="img/foto1.png">
+                    <img class="w-full h-full object-cover" style="object-position: 73% 20%;"
+                        src="img/foto1.PNG" alt="Portrait of Jhoan Sebastian Alzate Franco"
+                        data-i18n-attr="alt:hero.photoAlt">
                 </div>
-                <a href="https://www.linkedin.com/in/jhoan-sebastian-alzate-franco-a05053314/" target="_blank"
+                <a href="https://www.linkedin.com/in/coro-franco/" target="_blank"
                     rel="noopener" class="flex items-center transition justify-center md:hover:scale-105 mb-5">
                     <div class="text-[0.8rem]">
                         <span class="relative inline-flex overflow-hidden rounded-full p-[1px]"> <span
@@ -85,22 +95,36 @@
                     <span data-i18n="hero.greeting">Hey! I'm</span>
                     <span id="typewriter" class="text-accent-cyan"></span>
                 </h1>
-                <p id="profesion" class="text-[1.2rem] opacity-50 mb-4" data-i18n="hero.role">Software Developer</p>
-                <a target="_blank" href="https://www.linkedin.com/in/coro-franco/"
-                    class="linkedin opacity-0 bg-gray-700 px-4 py-1 rounded-xl mt-4 text-[0.9rem] flex w-[120px] gap-2 m-auto hover:text-black hover:bg-slate-300 place-items-center">
-                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path
-                            d="M6.5 8C7.32843 8 8 7.32843 8 6.5C8 5.67157 7.32843 5 6.5 5C5.67157 5 5 5.67157 5 6.5C5 7.32843 5.67157 8 6.5 8Z" />
-                        <path
-                            d="M5 10C5 9.44772 5.44772 9 6 9H7C7.55228 9 8 9.44771 8 10V18C8 18.5523 7.55228 19 7 19H6C5.44772 19 5 18.5523 5 18V10Z" />
-                        <path
-                            d="M11 19H12C12.5523 19 13 18.5523 13 18V13.5C13 12 16 11 16 13V18.0004C16 18.5527 16.4477 19 17 19H18C18.5523 19 19 18.5523 19 18V12C19 10 17.5 9 15.5 9C13.5 9 13 10.5 13 10.5V10C13 9.44771 12.5523 9 12 9H11C10.4477 9 10 9.44772 10 10V18C10 18.5523 10.4477 19 11 19Z" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" />
-                    </svg>
-                    <span data-i18n="hero.linkedin">LinkedIn</span>
-                </a>
+                <p id="profesion" class="text-[1.2rem] opacity-50" data-i18n="hero.role">Software Developer</p>
+                <p class="mb-6 text-[0.85rem] text-white/40" data-i18n="hero.focus">
+                    Integrations &amp; Frontend · Banking, Insurance &amp; Health
+                </p>
+
+                <div class="linkedin opacity-0 flex flex-wrap justify-center gap-3">
+                    <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/coro-franco/"
+                        class="glass inline-flex items-center gap-2 px-4 py-2 text-[0.85rem] font-bold transition-all duration-300 hover:border-accent-cyan/50 hover:text-accent-cyan">
+                        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.5 8C7.32843 8 8 7.32843 8 6.5C8 5.67157 7.32843 5 6.5 5C5.67157 5 5 5.67157 5 6.5C5 7.32843 5.67157 8 6.5 8Z" />
+                            <path d="M5 10C5 9.44772 5.44772 9 6 9H7C7.55228 9 8 9.44771 8 10V18C8 18.5523 7.55228 19 7 19H6C5.44772 19 5 18.5523 5 18V10Z" />
+                            <path d="M11 19H12C12.5523 19 13 18.5523 13 18V13.5C13 12 16 11 16 13V18.0004C16 18.5527 16.4477 19 17 19H18C18.5523 19 19 18.5523 19 18V12C19 10 17.5 9 15.5 9C13.5 9 13 10.5 13 10.5V10C13 9.44771 12.5523 9 12 9H11C10.4477 9 10 9.44772 10 10V18C10 18.5523 10.4477 19 11 19Z" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" />
+                        </svg>
+                        <span data-i18n="hero.linkedin">LinkedIn</span>
+                    </a>
+
+                    <a href="cv/Jhoan_Sebastian_Alzate_CV.pdf" download
+                        class="inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-[0.85rem] font-bold text-ink transition-transform duration-300 hover:-translate-y-0.5"
+                        style="background-image: linear-gradient(135deg, #22d3ee, #8b5cf6);">
+                        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <span data-i18n="hero.cv">Download CV</span>
+                    </a>
+                </div>
             </div>
         </section>
 
