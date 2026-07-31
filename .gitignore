@@ -1,2 +1,7 @@
 node_modules/
 .superpowers/
+
+# Fuentes de assets, no se versionan; solo entran las versiones web convertidas
+*.mp4
+/Jhoan Sebastian Alzate Franco*.jpg
+/Jhoan_Sebastian_Alzate_CV*.pdf
