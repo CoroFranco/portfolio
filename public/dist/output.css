@@ -1417,12 +1417,13 @@ html[lang='en'] [data-lang-opt='en'],
 /* Interruptor global de degradación: sin GSAP o con reduced-motion,
      todo lo que dependía de una animación queda en su estado final. */
 
+/* `.project-info` y `.aboutme` ya llevan `.reveal` en el marcado, asi que
+     la primera linea los cubre. `.skills` no lleva `.reveal`: se conserva. */
+
 html.no-anim .reveal,
   html.no-anim .videos,
   html.no-anim .linkedin,
-  html.no-anim .project-info,
   html.no-anim .skills,
-  html.no-anim .aboutme,
   html.no-anim #profesion,
   html.no-anim #mainImage {
   opacity: 1 !important;

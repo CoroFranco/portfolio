@@ -194,10 +194,13 @@ function setLanguage(lang) {
 
   document.querySelectorAll('[data-i18n-attr]').forEach(function (el) {
     el.dataset.i18nAttr.split(',').forEach(function (pair) {
-      const parts = pair.split(':');
-      if (parts.length !== 2) return;
-      const attr = parts[0].trim();
-      const value = dict[parts[1].trim()];
+      // Split en el PRIMER ':' unicamente: la clave puede contener ':'
+      // y un par sin ':' se ignora sin escribir nada.
+      const sep = pair.indexOf(':');
+      if (sep < 1) return;
+      const attr = pair.slice(0, sep).trim();
+      const value = dict[pair.slice(sep + 1).trim()];
+      if (!attr) return;
       if (typeof value === 'string') el.setAttribute(attr, value);
     });
   });
