@@ -1,3 +1,7 @@
+// Envuelto en IIFE: los cuatro scripts de dist/ comparten un solo scope global
+// y `text` / `speed` son los nombres mas propensos a colisionar de todos.
+(function () {
+
 const listItem = document.querySelectorAll(".nav li");
 const menuBackDrop = document.querySelector("#menu-backdrop");
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,6 +63,10 @@ listItem.forEach((item) => {
 })
 
 function typeWriter(element, text, speed) {
+    if (!element) return;
+    // El nombre viene escrito en el HTML para que exista sin JS; se limpia aqui
+    // para que el efecto arranque desde vacio y no lo duplique.
+    element.innerHTML = '';
     let i = 0;
     function type() {
         if (i < text.length) {
@@ -75,6 +83,8 @@ const speed = 100;
 const typewriterElement = document.getElementById('typewriter');
 
 typeWriter(typewriterElement, text, speed);
+
+})();
 
 
 

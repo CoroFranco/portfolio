@@ -446,6 +446,34 @@ video {
   display: none;
 }
 
+:root {
+  /* Color de marca del chip; cada chip lo sobreescribe inline */
+  --glow: #22d3ee;
+}
+
+body {
+  background-color: #050510;
+  /* Respaldo visible si WebGL no está disponible */
+  background-image:
+      radial-gradient(60% 50% at 20% 0%, rgba(34, 211, 238, 0.10), transparent 70%),
+      radial-gradient(50% 50% at 85% 15%, rgba(139, 92, 246, 0.12), transparent 70%),
+      radial-gradient(70% 60% at 50% 100%, rgba(99, 102, 241, 0.08), transparent 70%);
+  background-attachment: fixed;
+}
+
+:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+#background-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  display: block;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -554,6 +582,211 @@ video {
   --tw-contain-style:  ;
 }
 
+.glass {
+  border-radius: 1rem;
+  border-width: 1px;
+  border-color: rgb(255 255 255 / 0.1);
+  background-color: rgb(255 255 255 / 0.03);
+  --tw-backdrop-blur: blur(12px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+
+/* Estado inicial de todo lo que revela GSAP al hacer scroll.
+     Sin JS no hay quien revele (ni siquiera llega a aplicarse `no-anim`,
+     que tambien la pone JS), asi que el estado por defecto debe ser
+     visible: el script inline del <head> marca <html class="js"> y solo
+     entonces se oculta. */
+
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* Mismo razonamiento para lo que anima `initHero` / `initProjectVideos`.
+     Antes llevaban la utilidad `opacity-0` en el marcado, que sin JS no
+     tenia quien la subiera: los dos botones del hero y los tres videos
+     quedaban invisibles para siempre. Ahora el estado oculto tambien
+     depende de `html.js`. */
+
+html.js .linkedin,
+  html.js .videos {
+  opacity: 0;
+}
+
+.skill-chip {
+  border-radius: 1rem;
+  border-width: 1px;
+  border-color: rgb(255 255 255 / 0.1);
+  background-color: rgb(255 255 255 / 0.03);
+  --tw-backdrop-blur: blur(12px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  color: rgba(229, 231, 235, 0.7);
+}
+
+.skill-chip:hover {
+  color: var(--glow);
+  border-color: color-mix(in srgb, var(--glow) 45%, transparent);
+  box-shadow: 0 0 24px -6px var(--glow);
+  transform: translateY(-2px);
+}
+
+/* Los SVG entran por <img>, fuera del arbol de color del documento.
+     Se normalizan a blanco tenue con brightness/invert y el hover
+     sube la opacidad y proyecta el glow de marca. */
+
+.skill-chip img {
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.skill-chip:hover img {
+  opacity: 1;
+  filter: brightness(0) invert(1) drop-shadow(0 0 6px var(--glow));
+}
+
+/* Borde de gradiente animado, activado en hover del contenedor */
+
+.gradient-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+      from var(--angle, 0deg),
+      #22d3ee,
+      #8b5cf6,
+      #6366f1,
+      #22d3ee
+    );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
+  animation: border-spin 4s linear infinite;
+}
+
+/* El nav scrollea en horizontal por debajo de md: seis items no caben en
+     375px y quedaban debajo del toggle de idioma, que es `absolute right-4`.
+     El max-width le reserva ese hueco. */
+
+.nav-list {
+  scrollbar-width: none;
+}
+
+.nav-list::-webkit-scrollbar {
+  display: none;
+}
+
+[data-lang-opt] {
+  color: rgba(229, 231, 235, 0.7);
+}
+
+html[lang='en'] [data-lang-opt='en'],
+  html[lang='es'] [data-lang-opt='es'] {
+  background: linear-gradient(135deg, #22d3ee, #8b5cf6);
+  color: #050510;
+}
+
+.timeline-track {
+  position: relative;
+  padding-left: 2.25rem;
+  list-style: none;
+}
+
+/* Riel apagado, siempre visible */
+
+.timeline-track::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Progreso de gradiente; la altura la anima GSAP con scrub */
+
+.timeline-progress {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.35rem;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(180deg, #22d3ee, #8b5cf6, #6366f1);
+  box-shadow: 0 0 12px -2px #22d3ee;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 1.75rem;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -2.25rem;
+  top: 1.4rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.155rem;
+  border-radius: 9999px;
+  background: #0e0e1f;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.timeline-dot--active {
+  background: #22d3ee;
+  border-color: #22d3ee;
+}
+
+.about-photo {
+  position: relative;
+  padding: 3px;
+  background-image: linear-gradient(135deg, #22d3ee, #8b5cf6);
+  box-shadow: 0 0 40px -12px rgba(34, 211, 238, 0.5);
+}
+
+.about-photo img {
+  border-radius: 9999px;
+  filter: contrast(1.05) saturate(1.05);
+}
+
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
 .fixed {
   position: fixed;
 }
@@ -578,8 +811,16 @@ video {
   left: var(--left);
 }
 
+.right-4 {
+  right: 1rem;
+}
+
 .top-0 {
   top: 0px;
+}
+
+.top-1\/2 {
+  top: 50%;
 }
 
 .top-\[var\(--top\)\] {
@@ -598,27 +839,20 @@ video {
   margin: auto;
 }
 
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
+.mb-12 {
+  margin-bottom: 3rem;
 }
 
-.my-2 {
-  margin-top: 0.5rem;
+.mb-14 {
+  margin-bottom: 3.5rem;
+}
+
+.mb-16 {
+  margin-bottom: 4rem;
+}
+
+.mb-2 {
   margin-bottom: 0.5rem;
-}
-
-.my-8 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.mb-10 {
-  margin-bottom: 2.5rem;
-}
-
-.mb-20 {
-  margin-bottom: 5rem;
 }
 
 .mb-4 {
@@ -629,12 +863,16 @@ video {
   margin-bottom: 1.25rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
-.mt-auto {
-  margin-top: auto;
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.block {
+  display: block;
 }
 
 .flex {
@@ -649,14 +887,18 @@ video {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
 .size-4 {
   width: 1rem;
   height: 1rem;
 }
 
-.size-6 {
-  width: 1.5rem;
-  height: 1.5rem;
+.size-5 {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .size-7 {
@@ -664,8 +906,12 @@ video {
   height: 1.75rem;
 }
 
-.h-\[15px\] {
-  height: 15px;
+.h-3\.5 {
+  height: 0.875rem;
+}
+
+.h-7 {
+  height: 1.75rem;
 }
 
 .h-\[200px\] {
@@ -684,20 +930,20 @@ video {
   height: 100vh;
 }
 
-.h-\[100\%\] {
-  height: 100%;
+.w-3\.5 {
+  width: 0.875rem;
 }
 
-.w-\[120px\] {
-  width: 120px;
+.w-7 {
+  width: 1.75rem;
 }
 
 .w-\[200px\] {
   width: 200px;
 }
 
-.w-\[50px\] {
-  width: 50px;
+.w-\[92\%\] {
+  width: 92%;
 }
 
 .w-\[95\%\] {
@@ -712,41 +958,42 @@ video {
   width: 100%;
 }
 
+.max-w-\[1000px\] {
+  max-width: 1000px;
+}
+
 .max-w-\[1100px\] {
   max-width: 1100px;
 }
 
-.max-w-\[300px\] {
-  max-width: 300px;
+.max-w-\[460px\] {
+  max-width: 460px;
 }
 
-.max-w-\[400px\] {
-  max-width: 400px;
-}
-
-.max-w-\[600px\] {
-  max-width: 600px;
+.max-w-\[820px\] {
+  max-width: 820px;
 }
 
 .max-w-\[900px\] {
   max-width: 900px;
 }
 
-.max-w-\[500px\] {
-  max-width: 500px;
+.max-w-\[calc\(100\%-6rem\)\] {
+  max-width: calc(100% - 6rem);
 }
 
 .flex-none {
   flex: none;
 }
 
-.grow {
-  flex-grow: 1;
+.-translate-y-1\/2 {
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.scale-\[1\.5\] {
-  --tw-scale-x: 1.5;
-  --tw-scale-y: 1.5;
+.scale-\[1\.03\] {
+  --tw-scale-x: 1.03;
+  --tw-scale-y: 1.03;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -760,8 +1007,30 @@ video {
   animation: spin 5s linear infinite;
 }
 
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.55);
+  }
+
+  70% {
+    box-shadow: 0 0 0 12px rgba(34, 211, 238, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+
+.resize {
+  resize: both;
 }
 
 .grid-cols-3 {
@@ -772,12 +1041,28 @@ video {
   flex-direction: column;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
 .place-items-center {
   place-items: center;
 }
 
 .items-center {
   align-items: center;
+}
+
+.items-baseline {
+  align-items: baseline;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .justify-center {
@@ -788,58 +1073,44 @@ video {
   justify-content: space-between;
 }
 
-.justify-around {
-  justify-content: space-around;
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-1\.5 {
+  gap: 0.375rem;
+}
+
+.gap-10 {
+  gap: 2.5rem;
 }
 
 .gap-2 {
   gap: 0.5rem;
 }
 
+.gap-20 {
+  gap: 5rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
 .gap-4 {
   gap: 1rem;
 }
 
-.space-x-0 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0px * var(--tw-space-x-reverse));
-  margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-y-10 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
-}
-
-.space-y-16 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(4rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(4rem * var(--tw-space-y-reverse));
-}
-
-.space-y-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
-}
-
-.place-self-start {
-  place-self: start;
-}
-
-.self-start {
-  align-self: flex-start;
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
 }
 
 .overflow-x-hidden {
@@ -858,63 +1129,49 @@ video {
   border-radius: 0.25rem;
 }
 
-.rounded-full {
-  border-radius: 9999px;
+.rounded-2xl {
+  border-radius: 1rem;
 }
 
-.rounded-lg {
-  border-radius: 0.5rem;
+.rounded-full {
+  border-radius: 9999px;
 }
 
 .rounded-xl {
   border-radius: 0.75rem;
 }
 
-.border-\[1px\] {
-  border-width: 1px;
+.border-b {
+  border-bottom-width: 1px;
 }
 
-.border-\[4px\] {
-  border-width: 4px;
+.border-t {
+  border-top-width: 1px;
 }
 
-.border-\[\#0a0427\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(10 4 39 / var(--tw-border-opacity));
+.border-accent-cyan\/25 {
+  border-color: rgb(34 211 238 / 0.25);
 }
 
-.border-\[\#f1f1f1a9\] {
-  border-color: #f1f1f1a9;
+.border-accent-cyan\/30 {
+  border-color: rgb(34 211 238 / 0.3);
 }
 
-.bg-\[\#003159\] {
+.border-white\/5 {
+  border-color: rgb(255 255 255 / 0.05);
+}
+
+.bg-accent-cyan\/15 {
+  background-color: rgb(34 211 238 / 0.15);
+}
+
+.bg-ink {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 49 89 / var(--tw-bg-opacity));
+  background-color: rgb(5 5 16 / var(--tw-bg-opacity));
 }
 
-.bg-\[\#182a33\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 42 51 / var(--tw-bg-opacity));
-}
-
-.bg-\[\#303030\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(48 48 48 / var(--tw-bg-opacity));
-}
-
-.bg-gray-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-
-.bg-gray-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
-}
-
-.bg-gray-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+.bg-ink\/90 {
+  background-color: rgb(5 5 16 / 0.9);
 }
 
 .bg-transparent {
@@ -926,14 +1183,6 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-opacity-60 {
-  --tw-bg-opacity: 0.6;
-}
-
-.bg-opacity-90 {
-  --tw-bg-opacity: 0.9;
-}
-
 .bg-\[conic-gradient\(from_60deg_at_50\%_50\%\2c \#6CADD9_0\%\2c \#21554E_50\%\2c \#6CCFD9_100\%\)\] {
   background-image: conic-gradient(from 60deg at 50% 50%,#6CADD9 0%,#21554E 50%,#6CCFD9 100%);
 }
@@ -943,13 +1192,27 @@ video {
      object-fit: cover;
 }
 
+.p-5 {
+  padding: 1.25rem;
+}
+
 .p-\[1px\] {
   padding: 1px;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.px-2\.5 {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }
 
 .px-3 {
@@ -962,9 +1225,9 @@ video {
   padding-right: 1rem;
 }
 
-.px-6 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+.py-0\.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
 }
 
 .py-1 {
@@ -972,9 +1235,14 @@ video {
   padding-bottom: 0.25rem;
 }
 
-.py-16 {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+.py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .py-20 {
@@ -987,20 +1255,49 @@ video {
   padding-bottom: 1rem;
 }
 
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .text-center {
   text-align: center;
 }
 
-.text-\[0\.55rem\] {
-  font-size: 0.55rem;
+.text-\[0\.65rem\] {
+  font-size: 0.65rem;
+}
+
+.text-\[0\.75rem\] {
+  font-size: 0.75rem;
+}
+
+.text-\[0\.7rem\] {
+  font-size: 0.7rem;
+}
+
+.text-\[0\.85rem\] {
+  font-size: 0.85rem;
 }
 
 .text-\[0\.8rem\] {
   font-size: 0.8rem;
 }
 
+.text-\[0\.95rem\] {
+  font-size: 0.95rem;
+}
+
 .text-\[0\.9rem\] {
   font-size: 0.9rem;
+}
+
+.text-\[1\.05rem\] {
+  font-size: 1.05rem;
+}
+
+.text-\[1\.15rem\] {
+  font-size: 1.15rem;
 }
 
 .text-\[1\.2rem\] {
@@ -1011,10 +1308,6 @@ video {
   font-size: 1.3rem;
 }
 
-.text-\[1\.5rem\] {
-  font-size: 1.5rem;
-}
-
 .text-\[2\.5rem\] {
   font-size: 2.5rem;
 }
@@ -1023,39 +1316,26 @@ video {
   font-size: 2rem;
 }
 
-.text-\[1\.4rem\] {
-  font-size: 1.4rem;
-}
-
-.text-\[1rem\] {
-  font-size: 1rem;
-}
-
-.text-\[2\.7rem\] {
-  font-size: 2.7rem;
-}
-
-.text-\[1\.1rem\] {
-  font-size: 1.1rem;
-}
-
 .font-bold {
   font-weight: 700;
 }
 
-.text-\[\#a4e3f3\] {
-  --tw-text-opacity: 1;
-  color: rgb(164 227 243 / var(--tw-text-opacity));
+.leading-relaxed {
+  line-height: 1.625;
 }
 
-.text-\[\#eba4f3\] {
-  --tw-text-opacity: 1;
-  color: rgb(235 164 243 / var(--tw-text-opacity));
+.tracking-wide {
+  letter-spacing: 0.025em;
 }
 
-.text-cyan-500 {
+.text-accent-cyan {
   --tw-text-opacity: 1;
-  color: rgb(6 182 212 / var(--tw-text-opacity));
+  color: rgb(34 211 238 / var(--tw-text-opacity));
+}
+
+.text-accent-violet {
+  --tw-text-opacity: 1;
+  color: rgb(139 92 246 / var(--tw-text-opacity));
 }
 
 .text-gray-300 {
@@ -1068,17 +1348,35 @@ video {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
+.text-ink {
+  --tw-text-opacity: 1;
+  color: rgb(5 5 16 / var(--tw-text-opacity));
+}
+
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.opacity-0 {
-  opacity: 0;
+.text-white\/60 {
+  color: rgb(255 255 255 / 0.6);
+}
+
+.text-white\/90 {
+  color: rgb(255 255 255 / 0.9);
 }
 
 .opacity-50 {
   opacity: 0.5;
+}
+
+.opacity-70 {
+  opacity: 0.7;
+}
+
+.invert {
+  --tw-invert: invert(100%);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .backdrop-blur-3xl {
@@ -1089,6 +1387,12 @@ video {
 
 .backdrop-blur-lg {
   --tw-backdrop-blur: blur(16px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+
+.backdrop-blur-md {
+  --tw-backdrop-blur: blur(12px);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
   backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
@@ -1107,8 +1411,24 @@ video {
   transition-duration: 150ms;
 }
 
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .duration-200 {
   transition-duration: 200ms;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
 }
 
 .duration-500 {
@@ -1123,28 +1443,68 @@ video {
   transition-timing-function: linear;
 }
 
-.skills svg:hover {
-  opacity: 0.8;
-  filter: brightness(1.2);
+/* Interruptor global de degradación: sin GSAP o con reduced-motion,
+     todo lo que dependía de una animación queda en su estado final. */
+
+/* Solo los tres selectores a los que el CSS baja de verdad la opacidad
+     (via `html.js`). `.project-info` y `.aboutme` ya llevan `.reveal`.
+     `.skills` y `#mainImage` no tenian ninguna regla que los ocultara, y
+     `#profesion` lleva `opacity-50` de diseño: forzarlo a 1 era un bug. */
+
+html.no-anim .reveal,
+  html.no-anim .videos,
+  html.no-anim .linkedin {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-.hover\:border-b-\[1px\]:hover {
-  border-bottom-width: 1px;
+html.no-anim .gradient-border:hover::before {
+  animation: none;
 }
 
-.hover\:bg-\[\#21554E\]:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(33 85 78 / var(--tw-bg-opacity));
+html.no-anim .timeline-progress {
+  height: 100% !important;
 }
 
-.hover\:bg-slate-300:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Misma especificidad que las reglas base y declaradas despues: ganan.
+     Red de seguridad puramente CSS, por si `animations.js` no llegara a
+     aplicar `no-anim`. */
+
+  html.js .reveal,
+  html.js .linkedin,
+  html.js .videos {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.hover\:text-black:hover {
+.hover\:-translate-y-0\.5:hover {
+  --tw-translate-y: -0.125rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:border-accent-cyan\/50:hover {
+  border-color: rgb(34 211 238 / 0.5);
+}
+
+.hover\:text-accent-cyan:hover {
   --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
+  color: rgb(34 211 238 / var(--tw-text-opacity));
+}
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 768px) {
@@ -1152,8 +1512,12 @@ video {
     display: block;
   }
 
-  .md\:grid {
-    display: grid;
+  .md\:max-w-\[520px\] {
+    max-width: 520px;
+  }
+
+  .md\:max-w-none {
+    max-width: none;
   }
 
   .md\:grid-cols-2 {
@@ -1164,16 +1528,20 @@ video {
     flex-direction: row;
   }
 
-  .md\:space-x-10 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 0;
-    margin-right: calc(2.5rem * var(--tw-space-x-reverse));
-    margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
+  .md\:flex-row-reverse {
+    flex-direction: row-reverse;
   }
 
-  .md\:space-x-20 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 0;
-    margin-right: calc(5rem * var(--tw-space-x-reverse));
-    margin-left: calc(5rem * calc(1 - var(--tw-space-x-reverse)));
+  .md\:justify-center {
+    justify-content: center;
+  }
+
+  .md\:gap-10 {
+    gap: 2.5rem;
+  }
+
+  .md\:gap-16 {
+    gap: 4rem;
   }
 
   .md\:space-x-3 > :not([hidden]) ~ :not([hidden]) {
@@ -1182,26 +1550,20 @@ video {
     margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  .md\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-y-reverse: 0;
-    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
-    margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  .md\:overflow-visible {
+    overflow: visible;
+  }
+
+  .md\:text-\[0\.95rem\] {
+    font-size: 0.95rem;
+  }
+
+  .md\:text-\[1\.1rem\] {
+    font-size: 1.1rem;
   }
 
   .md\:text-\[1\.5rem\] {
     font-size: 1.5rem;
-  }
-
-  .md\:text-\[0\.8rem\] {
-    font-size: 0.8rem;
-  }
-
-  .md\:text-\[1rem\] {
-    font-size: 1rem;
-  }
-
-  .md\:text-\[1\.2rem\] {
-    font-size: 1.2rem;
   }
 
   .md\:hover\:scale-105:hover {
@@ -1209,22 +1571,6 @@ video {
     --tw-scale-y: 1.05;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
-}
-
-.\[\&\>div\]\:flex>div {
-  display: flex;
-}
-
-.\[\&\>div\]\:flex-col>div {
-  flex-direction: column;
-}
-
-.\[\&\>div\]\:place-items-center>div {
-  place-items: center;
-}
-
-.\[\&\>div\]\:gap-1>div {
-  gap: 0.25rem;
 }
 
 .\[\&\>li\:hover\]\:-translate-y-\[2px\]>li:hover {
@@ -1241,6 +1587,10 @@ video {
   color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 
+.\[\&\>li\>a\]\:whitespace-nowrap>li>a {
+  white-space: nowrap;
+}
+
 .\[\&\>li\>a\]\:px-2>li>a {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1253,13 +1603,21 @@ video {
   }
 }
 
+.\[\&\>li\]\:shrink-0>li {
+  flex-shrink: 0;
+}
+
 .\[\&\>li\]\:transition-transform>li {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
 
-.\[\&\>span\]\:text-cyan-500>span {
+.\[\&\>span\]\:font-semibold>span {
+  font-weight: 600;
+}
+
+.\[\&\>span\]\:text-accent-cyan>span {
   --tw-text-opacity: 1;
-  color: rgb(6 182 212 / var(--tw-text-opacity));
+  color: rgb(34 211 238 / var(--tw-text-opacity));
 }

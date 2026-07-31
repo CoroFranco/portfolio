@@ -2,9 +2,243 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    /* Color de marca del chip; cada chip lo sobreescribe inline */
+    --glow: #22d3ee;
+  }
 
+  body {
+    background-color: #050510;
+    /* Respaldo visible si WebGL no está disponible */
+    background-image:
+      radial-gradient(60% 50% at 20% 0%, rgba(34, 211, 238, 0.10), transparent 70%),
+      radial-gradient(50% 50% at 85% 15%, rgba(139, 92, 246, 0.12), transparent 70%),
+      radial-gradient(70% 60% at 50% 100%, rgba(99, 102, 241, 0.08), transparent 70%);
+    background-attachment: fixed;
+  }
 
-.skills svg:hover {
-    opacity: 0.8;
-    filter: brightness(1.2);
+  :focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  #background-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    display: block;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-2xl;
+  }
+
+  /* Estado inicial de todo lo que revela GSAP al hacer scroll.
+     Sin JS no hay quien revele (ni siquiera llega a aplicarse `no-anim`,
+     que tambien la pone JS), asi que el estado por defecto debe ser
+     visible: el script inline del <head> marca <html class="js"> y solo
+     entonces se oculta. */
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  /* Mismo razonamiento para lo que anima `initHero` / `initProjectVideos`.
+     Antes llevaban la utilidad `opacity-0` en el marcado, que sin JS no
+     tenia quien la subiera: los dos botones del hero y los tres videos
+     quedaban invisibles para siempre. Ahora el estado oculto tambien
+     depende de `html.js`. */
+  html.js .linkedin,
+  html.js .videos {
+    opacity: 0;
+  }
+
+  .skill-chip {
+    @apply glass flex flex-col items-center justify-center gap-2 px-3 py-4 transition-all duration-300;
+    color: rgba(229, 231, 235, 0.7);
+  }
+
+  .skill-chip:hover {
+    color: var(--glow);
+    border-color: color-mix(in srgb, var(--glow) 45%, transparent);
+    box-shadow: 0 0 24px -6px var(--glow);
+    transform: translateY(-2px);
+  }
+
+  /* Los SVG entran por <img>, fuera del arbol de color del documento.
+     Se normalizan a blanco tenue con brightness/invert y el hover
+     sube la opacidad y proyecta el glow de marca. */
+  .skill-chip img {
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+
+  .skill-chip:hover img {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 6px var(--glow));
+  }
+
+  /* Borde de gradiente animado, activado en hover del contenedor */
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      #22d3ee,
+      #8b5cf6,
+      #6366f1,
+      #22d3ee
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: -1;
+  }
+
+  .gradient-border:hover::before {
+    opacity: 1;
+    animation: border-spin 4s linear infinite;
+  }
+
+  /* El nav scrollea en horizontal por debajo de md: seis items no caben en
+     375px y quedaban debajo del toggle de idioma, que es `absolute right-4`.
+     El max-width le reserva ese hueco. */
+  .nav-list {
+    scrollbar-width: none;
+  }
+
+  .nav-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-lang-opt] {
+    color: rgba(229, 231, 235, 0.7);
+  }
+
+  html[lang='en'] [data-lang-opt='en'],
+  html[lang='es'] [data-lang-opt='es'] {
+    background: linear-gradient(135deg, #22d3ee, #8b5cf6);
+    color: #050510;
+  }
+
+  .timeline-track {
+    position: relative;
+    padding-left: 2.25rem;
+    list-style: none;
+  }
+
+  /* Riel apagado, siempre visible */
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0.35rem;
+    bottom: 0.35rem;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Progreso de gradiente; la altura la anima GSAP con scrub */
+  .timeline-progress {
+    position: absolute;
+    left: 0.5rem;
+    top: 0.35rem;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, #22d3ee, #8b5cf6, #6366f1);
+    box-shadow: 0 0 12px -2px #22d3ee;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 1.75rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.25rem;
+    top: 1.4rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-left: 0.155rem;
+    border-radius: 9999px;
+    background: #0e0e1f;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .timeline-dot--active {
+    background: #22d3ee;
+    border-color: #22d3ee;
+  }
+
+  .about-photo {
+    position: relative;
+    padding: 3px;
+    background-image: linear-gradient(135deg, #22d3ee, #8b5cf6);
+    box-shadow: 0 0 40px -12px rgba(34, 211, 238, 0.5);
+  }
+
+  .about-photo img {
+    border-radius: 9999px;
+    filter: contrast(1.05) saturate(1.05);
+  }
+}
+
+@layer utilities {
+  /* Interruptor global de degradación: sin GSAP o con reduced-motion,
+     todo lo que dependía de una animación queda en su estado final. */
+  /* Solo los tres selectores a los que el CSS baja de verdad la opacidad
+     (via `html.js`). `.project-info` y `.aboutme` ya llevan `.reveal`.
+     `.skills` y `#mainImage` no tenian ninguna regla que los ocultara, y
+     `#profesion` lleva `opacity-50` de diseño: forzarlo a 1 era un bug. */
+  html.no-anim .reveal,
+  html.no-anim .videos,
+  html.no-anim .linkedin {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html.no-anim .gradient-border:hover::before {
+    animation: none;
+  }
+
+  html.no-anim .timeline-progress {
+    height: 100% !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Misma especificidad que las reglas base y declaradas despues: ganan.
+     Red de seguridad puramente CSS, por si `animations.js` no llegara a
+     aplicar `no-anim`. */
+  html.js .reveal,
+  html.js .linkedin,
+  html.js .videos {
+    opacity: 1;
+    transform: none;
+  }
 }

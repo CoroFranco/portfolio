@@ -5,31 +5,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:title" content="Jhoan Alzate's Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jhoan Alzate — Software Developer" />
     <meta property="og:image" content="https://jhoan-alzate.netlify.app/img/port.jpg" />
     <meta property="og:description"
-        content="Full Stack developer in training with experience in web applications. Skilled in frontend and backend development, committed to continuous learning and innovative solutions." />
+        content="Software developer with over a year and a half orchestrating processes across systems for banking, insurance and health. Backend integrations (OSB/OIC, Node.js) and clean, functional React interfaces." />
     <meta property="og:url" content="https://jhoan-alzate.netlify.app/" />
-    <title>Jhoan Alzate Portfolio</title>
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jhoan Alzate — Software Developer" />
+    <meta name="twitter:description"
+        content="Software developer with over a year and a half orchestrating processes across systems for banking, insurance and health. Backend integrations (OSB/OIC, Node.js) and clean, functional React interfaces." />
+    <meta name="twitter:image" content="https://jhoan-alzate.netlify.app/img/port.jpg" />
+
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
+    <title>Jhoan Alzate — Software Developer</title>
     <link rel="stylesheet" href="dist/output.css">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Mismo texto que og:description / twitter:description y que la clave
+         `meta.description` de i18n.js, que reescribe este atributo al cargar. -->
+    <meta name="description"
+        content="Software developer with over a year and a half orchestrating processes across systems for banking, insurance and health. Backend integrations (OSB/OIC, Node.js) and clean, functional React interfaces.">
+    <meta name="theme-color" content="#050510">
+
+    <script>
+      // Fija el idioma en el elemento raiz antes de pintar, para que el CSS
+      // del toggle no arranque en el estado equivocado. Marca tambien
+      // `js`: sin ella, el CSS deja todo `.reveal` visible (sin JS nadie
+      // lo revelaria).
+      (function () {
+        document.documentElement.classList.add('js');
+        // Failsafe: si dist/animations.js nunca llega (404, blip del CDN,
+        // extension) o lanza antes de marcar `anim-ready`, nadie agregaria
+        // `no-anim` y el contenido oculto bajo `html.js` quedaria invisible
+        // para siempre. Va antes del localStorage para que un throw ahi no
+        // pueda saltarselo.
+        setTimeout(function () {
+          var h = document.documentElement;
+          if (!h.classList.contains('anim-ready')) h.classList.add('no-anim');
+        }, 3000);
+        var lang = 'en';
+        try {
+          var stored = localStorage.getItem('portfolio-lang');
+          if (stored === 'es' || stored === 'en') lang = stored;
+        } catch (e) { /* sin localStorage: queda el default */ }
+        document.documentElement.lang = lang;
+        document.documentElement.dataset.lang = lang;
+      })();
+    </script>
+    <script defer src="dist/i18n.js"></script>
+
+    <!-- Los siete scripts van con `defer`: no bloquean el paint y se ejecutan
+         en orden de documento, asi que gsap/ScrollTrigger/THREE siguen estando
+         definidos cuando corren background.js y animations.js. Deferir solo
+         algunos invertiria el orden y dejaria GSAP_READY en false. -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
-<body class="bg-gray-900 text-white overflow-x-hidden">
-    <div id="background-container" class="fixed top-0 left-0 w-[50px] h-full -z-10"></div>
+<body class="bg-ink text-white overflow-x-hidden">
+    <canvas id="background-canvas" aria-hidden="true"></canvas>
     <header id="nave" class="fixed z-50 top-0 left-0 w-full">
-        <nav class="nav flex bg-gray-900 bg-opacity-90 py-4">
+        <nav class="nav relative flex bg-ink/90 backdrop-blur-md py-4 border-b border-white/5">
             <ul
-                class="text-[1.1rem] flex justify-center m-auto md:space-x-3 [&>li:hover]:cursor-pointer [&>li:hover]:text-blue-400 [&>li:hover]:-translate-y-[2px] [&>li]:transition-transform [&>li>a]:md:px-4 [&>li>a]:px-2">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="mailto:jhoans.alzatef@gmail.com">Contact</a></li>
+                class="nav-list text-[0.8rem] md:text-[1.1rem] flex flex-nowrap justify-start md:justify-center m-auto max-w-[calc(100%-6rem)] md:max-w-none overflow-x-auto md:overflow-visible md:space-x-3 [&>li]:shrink-0 [&>li:hover]:cursor-pointer [&>li:hover]:text-blue-400 [&>li:hover]:-translate-y-[2px] [&>li]:transition-transform [&>li>a]:md:px-4 [&>li>a]:px-2 [&>li>a]:whitespace-nowrap">
+                <li><a href="#home" data-i18n="nav.home">Home</a></li>
+                <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+                <li><a href="#projects" data-i18n="nav.projects">Personal Projects</a></li>
+                <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="#about" data-i18n="nav.about">About</a></li>
+                <li><a href="mailto:jhoans.alzatef@gmail.com" data-i18n="nav.contact">Contact</a></li>
             </ul>
+            <button id="lang-toggle" type="button"
+                class="absolute right-4 top-1/2 -translate-y-1/2 glass flex items-center gap-1 px-1 py-1 text-[0.7rem] font-bold tracking-wide"
+                aria-label="Change language" data-i18n-attr="aria-label:lang.label">
+                <span class="rounded-full px-2 py-0.5 transition-colors duration-200"
+                    data-lang-opt="en">EN</span>
+                <span class="rounded-full px-2 py-0.5 transition-colors duration-200"
+                    data-lang-opt="es">ES</span>
+            </button>
         </nav>
         <div id="menu-backdrop"
             class="-z-10 fixed  bg-white backdrop-blur-lg rounded left-[var(--left)] top-[var(--top)] w-[var(--width)] h-[var(--height)] transition-all duration-200 ease-linear">
@@ -40,345 +96,364 @@
         <section id="home" class="h-screen flex place-items-center justify-center ">
             <div class="text-center">
                 <div id="mainImage" class="flex-none w-[200px] h-[200px] rounded-full overflow-hidden m-auto mb-5">
-                    <img class="w-full h-full object-cover" style="object-position: 73% 20%;" alt="Foto de persona"
-                        src="img/foto1.png">
+                    <img class="w-full h-full object-cover" style="object-position: 73% 20%;"
+                        src="img/hero.webp" alt="Portrait of Jhoan Sebastian Alzate Franco"
+                        data-i18n-attr="alt:hero.photoAlt" width="854" height="400">
                 </div>
-                <a href="https://www.linkedin.com/in/jhoan-sebastian-alzate-franco-a05053314/" target="_blank"
+                <a href="https://www.linkedin.com/in/coro-franco/" target="_blank"
                     rel="noopener" class="flex items-center transition justify-center md:hover:scale-105 mb-5">
                     <div class="text-[0.8rem]">
                         <span class="relative inline-flex overflow-hidden rounded-full p-[1px]"> <span
                                 class="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_60deg_at_50%_50%,#6CADD9_0%,#21554E_50%,#6CCFD9_100%)] duration-700"></span>
                             <div
-                                class="inline-flex items-center justify-center w-full px-3 py-1 bg-transparent rounded-full cursor-pointer backdrop-blur-3xl whitespace-nowrap">
-                                Open to work</div>
+                                class="inline-flex items-center justify-center w-full px-3 py-1 bg-transparent rounded-full cursor-pointer backdrop-blur-3xl whitespace-nowrap"
+                                data-i18n="hero.badge">Open to work</div>
                         </span>
                     </div>
                 </a>
-                <h1 class="text-[2.5rem] font-bold md:block flex flex-col">Hey!, I'm <span id="typewriter"
-                        class="text-cyan-500"></span></h1>
-                <p id="profesion" class="text-[1.2rem] opacity-50 mb-4">Fullstack Developer</p>
-                <a target="_blank" href="https://www.linkedin.com/in/coro-franco/"
-                    class="linkedin opacity-0 bg-gray-700 px-4 py-1 rounded-xl mt-4 text-[0.9rem] flex w-[120px] gap-2 m-auto hover:text-black hover:bg-slate-300 place-items-center">
-                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path
-                            d="M6.5 8C7.32843 8 8 7.32843 8 6.5C8 5.67157 7.32843 5 6.5 5C5.67157 5 5 5.67157 5 6.5C5 7.32843 5.67157 8 6.5 8Z" />
-                        <path
-                            d="M5 10C5 9.44772 5.44772 9 6 9H7C7.55228 9 8 9.44771 8 10V18C8 18.5523 7.55228 19 7 19H6C5.44772 19 5 18.5523 5 18V10Z" />
-                        <path
-                            d="M11 19H12C12.5523 19 13 18.5523 13 18V13.5C13 12 16 11 16 13V18.0004C16 18.5527 16.4477 19 17 19H18C18.5523 19 19 18.5523 19 18V12C19 10 17.5 9 15.5 9C13.5 9 13 10.5 13 10.5V10C13 9.44771 12.5523 9 12 9H11C10.4477 9 10 9.44772 10 10V18C10 18.5523 10.4477 19 11 19Z" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" />
+                <h1 class="text-[2.5rem] font-bold md:block flex flex-col">
+                    <span data-i18n="hero.greeting">Hey! I'm</span>
+                    <span id="typewriter" class="text-accent-cyan">Jhoan Alzate</span>
+                </h1>
+                <p id="profesion" class="text-[1.2rem] opacity-50" data-i18n="hero.role">Software Developer</p>
+                <p class="mb-6 text-[0.85rem] text-white/60" data-i18n="hero.focus">
+                    Integrations &amp; Frontend · Banking, Insurance &amp; Health
+                </p>
+
+                <div class="linkedin flex flex-wrap justify-center gap-3">
+                    <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/coro-franco/"
+                        class="glass inline-flex items-center gap-2 px-4 py-2 text-[0.85rem] font-bold transition-all duration-300 hover:border-accent-cyan/50 hover:text-accent-cyan">
+                        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.5 8C7.32843 8 8 7.32843 8 6.5C8 5.67157 7.32843 5 6.5 5C5.67157 5 5 5.67157 5 6.5C5 7.32843 5.67157 8 6.5 8Z" />
+                            <path d="M5 10C5 9.44772 5.44772 9 6 9H7C7.55228 9 8 9.44771 8 10V18C8 18.5523 7.55228 19 7 19H6C5.44772 19 5 18.5523 5 18V10Z" />
+                            <path d="M11 19H12C12.5523 19 13 18.5523 13 18V13.5C13 12 16 11 16 13V18.0004C16 18.5527 16.4477 19 17 19H18C18.5523 19 19 18.5523 19 18V12C19 10 17.5 9 15.5 9C13.5 9 13 10.5 13 10.5V10C13 9.44771 12.5523 9 12 9H11C10.4477 9 10 9.44772 10 10V18C10 18.5523 10.4477 19 11 19Z" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" />
+                        </svg>
+                        <span data-i18n="hero.linkedin">LinkedIn</span>
+                    </a>
+
+                    <a href="cv/Jhoan_Sebastian_Alzate_CV.pdf" download
+                        class="inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-[0.85rem] font-bold text-ink transition-transform duration-300 hover:-translate-y-0.5"
+                        style="background-image: linear-gradient(135deg, #22d3ee, #8b5cf6);">
+                        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <span data-i18n="hero.cv">Download CV</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-20">
+            <div class="max-w-[820px] w-[92%] m-auto">
+                <div class="flex justify-center items-center gap-2 font-bold text-[2rem] mb-4">
+                    <svg class="size-7 text-accent-cyan" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="14" rx="2" />
+                        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
                     </svg>
-                    <span>Linkedln</span>
-                </a>
+                    <h2 data-i18n="exp.heading">Experience</h2>
+                </div>
+
+                <div class="reveal text-center mb-14">
+                    <p class="text-[1.15rem] font-bold text-white/90"><span data-i18n="exp.role">Development Analyst</span>
+                        · <span class="text-accent-cyan" data-i18n="exp.company">Cidenet</span></p>
+                    <p class="text-[0.85rem] text-white/60" data-i18n="exp.period">January 2025 – Present</p>
+                </div>
+
+                <ol class="timeline-track" data-stagger>
+                    <li class="timeline-item reveal-child">
+                        <div class="timeline-dot"></div>
+                        <div class="glass p-5">
+                            <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                                <h3 class="font-bold text-[1.05rem]" data-i18n="exp.ficohsa.client">Banco Ficohsa</h3>
+                                <span class="text-[0.75rem] text-white/60" data-i18n="exp.ficohsa.period">Jan 2025 – Oct 2025</span>
+                            </div>
+                            <p class="text-[0.9rem] text-gray-300 text-pretty" data-i18n="exp.ficohsa.body">Design, development, testing and deployment of SOAP/REST flows and integrations for the bank's middle tier with Oracle Service Bus (OSB 11g/12c) and Oracle Integration Cloud (OIC), working in Scrum teams.</p>
+                        </div>
+                    </li>
+
+                    <li class="timeline-item reveal-child">
+                        <div class="timeline-dot"></div>
+                        <div class="glass p-5">
+                            <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                                <h3 class="font-bold text-[1.05rem]" data-i18n="exp.sura.client">SURA</h3>
+                                <span class="text-[0.75rem] text-white/60" data-i18n="exp.sura.period">Oct 2025 – Dec 2025</span>
+                            </div>
+                            <p class="text-[0.9rem] text-gray-300 text-pretty" data-i18n="exp.sura.body">Migration of Oracle Forms as part of the modernization of internal applications.</p>
+                        </div>
+                    </li>
+
+                    <li class="timeline-item reveal-child">
+                        <div class="timeline-dot"></div>
+                        <div class="glass p-5">
+                            <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                                <h3 class="font-bold text-[1.05rem]" data-i18n="exp.psf.client">PSF · Insurance project</h3>
+                                <span class="text-[0.75rem] text-white/60" data-i18n="exp.psf.period">Jan 2026 – Mar 2026</span>
+                            </div>
+                            <p class="text-[0.9rem] text-gray-300 text-pretty" data-i18n="exp.psf.body">Feature development for an insurance platform, with React on the frontend and Node.js on the backend. Data modeling and management in PostgreSQL, with services deployed via Docker.</p>
+                        </div>
+                    </li>
+
+                    <li class="timeline-item reveal-child">
+                        <div class="timeline-dot timeline-dot--active animate-pulse-ring"></div>
+                        <div class="glass p-5 border-accent-cyan/25">
+                            <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                                <h3 class="font-bold text-[1.05rem] flex items-center gap-2">
+                                    <span data-i18n="exp.cysnet.client">CYSNET · MiTuSalud</span>
+                                    <span class="rounded-full bg-accent-cyan/15 px-2 py-0.5 text-[0.65rem] font-bold text-accent-cyan"
+                                        data-i18n="exp.now">Now</span>
+                                </h3>
+                                <span class="text-[0.75rem] text-white/60" data-i18n="exp.cysnet.period">Apr 2026 – Present</span>
+                            </div>
+                            <p class="text-[0.9rem] text-gray-300 text-pretty" data-i18n="exp.cysnet.body">Development with React of two healthcare web portals: one for patients and one for healthcare professionals. Collaboration on the design of clean, functional interfaces aligned with clinical care flows, and implementation of services.</p>
+                        </div>
+                    </li>
+                </ol>
             </div>
         </section>
 
-        <section id="projects" class="bg-gray-800 bg-opacity-60 py-16 flex flex-col space-y-16 ">
-            <div class="flex justify-center text-center gap-2 font-bold text-[2rem] place-items-center ">
-                <svg class="size-7 text-cyan-500" xmlns="http://www.w3.org/2000/svg" width="34" height="34"
-                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M7 8l-4 4l4 4"></path>
-                    <path d="M17 8l4 4l-4 4"></path>
-                    <path d="M14 4l-4 16"></path>
-                </svg>
-                <h2>Projects</h2>
-            </div>
-
-            <!-- Aqui Empieza Proyecto -->
-
+        <section id="projects" class="py-20">
             <div class="max-w-[1100px] w-[95%] m-auto">
-                <div
-                    class="flex md:flex-row flex-col justify-center w-full space-y-4 md:space-y-0  space-x-0 md:space-x-10 ">
-                    <div class="max-w-[500px]  overflow-hidden rounded-xl border-[4px] cursor-pointer border-[#0a0427]">
-                        <video muted loop class="videos opacity-0 scale-[1.5] transition-all duration-500 "
-                            src="videos/este.webm"></video>
-                    </div>
-
-                    <div class="max-w-[400px] flex flex-col gap-2 project-info m-auto">
-                        <h3 class="text-[1.3rem] md:text-[1.5rem] font-bold">Portfolio, Gallery, Artist Page</h3>
-                        <ul class="flex my-2 space-x-2">
-                            <li><span
-                                    class="px-2 py-1 font-bold flex place-items-center md:text-[0.8rem] text-[0.55rem] rounded-full bg-[#303030] justify-center gap-2"><img
-                                        class="h-[15px]" src="img/svgs/astro.svg" alt=""> Astro</span></li>
-                            <li><span
-                                    class="px-2 py-1 font-bold flex place-items-center md:text-[0.8rem] text-[0.55rem] rounded-full bg-[#003159] justify-center gap-2"><img
-                                        class="h-[15px]" src="img/svgs/tailwindcss.svg" alt=""> Tailwind</span></li>
-                        </ul>
-                        <p class="md:text-[1rem] text-[0.8rem] text-gray-300 text-pretty ">Personal website of artist
-                            Felipe
-                            Franco, a space dedicated to showcase the work and projects of the talented artist. On this
-                            page, you will be able to explore a complete collection of his artistic projects, including
-                            visual works, installations and collaborative projects.</p>
-
-                        <div class="mt-auto flex gap-2">
-                            <a target="_blank" href="https://github.com/CoroFranco/artist-page" role="link"
-                                class="inline-flex place-items-center gap-2 rounded-lg bg-gray-900 hover:bg-[#21554E] px-4 py-1 text-[0.8rem] font-bold border-[1px] border-[#f1f1f1a9]">
-                                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path
-                                        d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5">
-                                    </path>
-                                </svg>
-                                Code
-                            </a>
-                            <a target="_blank" href="https://felipefranco.netlify.app/" role="link"
-                                class="inline-flex place-items-center gap-2 rounded-lg bg-gray-900 hover:bg-[#21554E] px-4 py-1 text-[0.8rem] font-bold border-[1px] border-[#f1f1f1a9]">
-                                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                                </svg>
-                                Preview
-                            </a>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Aqui Termina Proyecto -->
-
-            <!-- Aqui Empieza Proyecto -->
-
-            <div class="max-w-[1100px] w-[95%] m-auto">
-                <div
-                    class="flex md:flex-row md:space-y-0 space-y-4 flex-col justify-center place-items-center w-full space-x-0 md:space-x-10 ">
-                    <div class="max-w-[500px]  overflow-hidden rounded-xl border-[4px] cursor-pointer border-[#0a0427]">
-                        <video muted loop class="videos opacity-0 scale-[1.5]  transition-all duration-500 "
-                            src="videos/aqui.webm"></video>
-                    </div>
-
-                    <div class="max-w-[400px] flex flex-col justify-between gap-2 project-info m-auto">
-                        <h3 class="md:text-[1.5rem] text-[1.3rem] font-bold">Nimi Platform</h3>
-                        <ul class="flex my-2 space-x-2">
-                            <li><span
-                                    class="px-2 py-1 font-bold flex place-items-center md:text-[0.8rem] text-[0.55rem] rounded-full bg-[#303030] justify-center gap-2"><img
-                                        class="h-[15px]" src="img/svgs/laravel.svg" alt=""> Laravel</span></li>
-                            <li><span
-                                    class="px-2 py-1 font-bold flex place-items-center md:text-[0.8rem] text-[0.55rem] rounded-full bg-[#003159] justify-center gap-2"><img
-                                        class="h-[15px]" src="img/svgs/tailwindcss.svg" alt=""> Tailwind</span></li>
-                            <li><span
-                                    class="px-2 py-1 font-bold flex place-items-center md:text-[0.8rem] text-[0.55rem] rounded-full bg-[#182a33] justify-center gap-2"><img
-                                        class="h-[15px]" src="img/svgs/mysql.svg" alt=""> MySQL</span></li>
-                        </ul>
-                        <p class="md:text-[1rem] text-[0.8rem] text-gray-300 text-pretty ">Nimi is a dynamic eLearning
-                            platform
-                            eLearning platform that acts as a knowledge marketplace, allowing anyone to participate as a
-                            learner or teacher.
-                            to participate as a learner or teacher. Our goal is to facilitate the exchange of knowledge
-                            and promote continuous learning that is accessible to all.</p>
-
-                        <div class="mt-auto flex gap-2">
-                            <a target="_blank" href="https://github.com/CoroFranco/artist-page" role="link"
-                                class="inline-flex place-items-center gap-2 rounded-lg bg-gray-900 hover:bg-[#21554E] px-4 py-1 text-[0.8rem] font-bold border-[1px] border-[#f1f1f1a9]">
-                                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path
-                                        d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5">
-                                    </path>
-                                </svg>
-                                Code
-                            </a>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Aqui Termina Proyecto -->
-        </section>
-
-        <section id="skills">
-            <div class="py-20 max-w-[600px] w-[95%] m-auto">
-                <h2 class="text-center text-[2rem] font-bold mb-20">Skills</h2>
-                <div class="md:grid md:grid-cols-2 ">
-
-                    <!--  inicio seccion de skills -->
-
-                    <div class="skills flex flex-col place-items-center space-y-10 mb-10">
-                        <h3 class="text-[2rem] text-[#eba4f3]">Frontend</h3>
-                        <div
-                            class=" grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div>
-                                <img src="./img/svgs/html.svg" alt="logo html">
-                                <p>html</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/js.svg" alt="logo js">
-                                <p>JavaScript</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/css.svg" alt="logo css">
-                                <p>Css</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/tailwindcss.svg" alt="logo tailwind">
-                                <p>tailwind</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/sass.svg" alt="logo sass">
-                                <p>Sass</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/astro.svg" alt="logo astro">
-                                <p>Astro</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Fin seccion skills -->
-
-                    <!--  inicio seccion de skills -->
-
-                    <div class="skills flex flex-col place-items-center space-y-10 mb-10">
-                        <h3 class="text-[2rem] text-[#a4e3f3]">Backend</h3>
-                        <div
-                            class="grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div class="">
-
-                                <img src="img/svgs/php.svg" alt="logo php">
-                                <p>php</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/node.svg" alt="logo node">
-                                <p>Node.js</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/laravel.svg" alt="logo laravel">
-                                <p>Laravel</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/express.svg" alt="logo express">
-                                <p>Express.js</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/mysql.svg" alt="logo mysql">
-                                <p>MySQL</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/mongo.svg" alt="logo mongo">
-                                <p>MongoDB</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fin seccion skills -->
-                    <!--  inicio seccion de skills -->
-
-                    <div class="skills flex flex-col place-items-center space-y-10 mb-10">
-                        <h3 class="text-[2rem] text-[#a4e3f3]">Learning</h3>
-                        <div
-                            class=" grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div>
-                                <img src="./img/svgs/react.svg" alt="logo react">
-                                <p>React</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/ts.svg" alt="logo ts">
-                                <p>TypeScript</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fin seccion skills -->
-                    <!--  inicio seccion de skills -->
-
-                    <div class="skills flex flex-col place-items-center space-y-10">
-                        <h3 class="text-[2rem] text-[#eba4f3]">Tools</h3>
-                        <div
-                            class=" grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div>
-                                <img src="./img/svgs/console.svg" alt="logo console">
-                                <p>Console</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/vsc.svg" alt="logo vsc">
-                                <p>VSC</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/git.svg" alt="logo git">
-                                <p>Git</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/github.svg" alt="logo github">
-                                <p>GitHub</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/figma.svg" alt="logo figma">
-                                <p>Figma</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fin seccion skills -->
-
+                <div class="flex justify-center items-center gap-2 font-bold text-[2rem] mb-16">
+                    <svg class="size-7 text-accent-cyan" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 8l-4 4l4 4"></path>
+                        <path d="M17 8l4 4l-4 4"></path>
+                        <path d="M14 4l-4 16"></path>
+                    </svg>
+                    <h2 data-i18n="proj.heading">Personal Projects</h2>
                 </div>
 
+                <div class="flex flex-col gap-20">
+
+                    <!-- MiduGuard -->
+                    <article class="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
+                        <div class="gradient-border w-full md:max-w-[520px] overflow-hidden rounded-xl">
+                            <video class="videos scale-[1.03] w-full block transition-transform duration-500"
+                                src="videos/miduguard.webm" width="1000" height="492" muted loop playsinline preload="metadata"
+                                aria-label="MiduGuard gameplay"></video>
+                        </div>
+                        <div class="project-info reveal max-w-[460px] flex flex-col gap-3">
+                            <h3 class="text-[1.3rem] md:text-[1.5rem] font-bold" data-i18n="proj.midu.title">MiduGuard</h3>
+                            <ul class="flex flex-wrap gap-2">
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/next.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">Next.js</span></li>
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/turso.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">Turso</span></li>
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/clerk.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">Clerk</span></li>
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/tailwindcss.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">Tailwind</span></li>
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/gsap.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">GSAP</span></li>
+                            </ul>
+                            <p class="md:text-[0.95rem] text-[0.85rem] text-gray-300 text-pretty" data-i18n="proj.midu.body">An educational game that blends the border-management mechanics of Papers, Please with hands-on SQL learning.</p>
+                            <div class="mt-2 flex gap-2">
+                                <a target="_blank" rel="noopener" href="https://github.com/CoroFranco/MiduGuard"
+                                    class="glass inline-flex items-center gap-2 px-4 py-1.5 text-[0.8rem] font-bold transition-colors duration-300 hover:text-accent-cyan hover:border-accent-cyan/50">
+                                    <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+                                    </svg>
+                                    <span data-i18n="proj.code">Code</span>
+                                </a>
+                                <a target="_blank" rel="noopener" href="https://midu-guard.vercel.app"
+                                    class="inline-flex items-center gap-2 rounded-2xl px-4 py-1.5 text-[0.8rem] font-bold text-ink transition-transform duration-300 hover:-translate-y-0.5"
+                                    style="background-image: linear-gradient(135deg, #22d3ee, #8b5cf6);">
+                                    <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                    </svg>
+                                    <span data-i18n="proj.preview">Preview</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Artist Page (invertido) -->
+                    <article class="flex flex-col md:flex-row-reverse gap-6 md:gap-10 items-center">
+                        <div class="gradient-border w-full md:max-w-[520px] overflow-hidden rounded-xl">
+                            <video class="videos scale-[1.03] w-full block transition-transform duration-500"
+                                src="videos/este.webm" width="1280" height="720" muted loop playsinline preload="metadata"
+                                aria-label="Artist page demo"></video>
+                        </div>
+                        <div class="project-info reveal max-w-[460px] flex flex-col gap-3">
+                            <h3 class="text-[1.3rem] md:text-[1.5rem] font-bold" data-i18n="proj.artist.title">Portfolio, Gallery, Artist Page</h3>
+                            <ul class="flex flex-wrap gap-2">
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/astro.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">Astro</span></li>
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/tailwindcss.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">Tailwind</span></li>
+                            </ul>
+                            <p class="md:text-[0.95rem] text-[0.85rem] text-gray-300 text-pretty" data-i18n="proj.artist.body">Personal website of artist Felipe Franco, a space dedicated to showcasing his work and projects.</p>
+                            <div class="mt-2 flex gap-2">
+                                <a target="_blank" rel="noopener" href="https://github.com/CoroFranco/artist-page"
+                                    class="glass inline-flex items-center gap-2 px-4 py-1.5 text-[0.8rem] font-bold transition-colors duration-300 hover:text-accent-cyan hover:border-accent-cyan/50">
+                                    <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+                                    </svg>
+                                    <span data-i18n="proj.code">Code</span>
+                                </a>
+                                <a target="_blank" rel="noopener" href="https://felipefranco.netlify.app/"
+                                    class="inline-flex items-center gap-2 rounded-2xl px-4 py-1.5 text-[0.8rem] font-bold text-ink transition-transform duration-300 hover:-translate-y-0.5"
+                                    style="background-image: linear-gradient(135deg, #22d3ee, #8b5cf6);">
+                                    <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                    </svg>
+                                    <span data-i18n="proj.preview">Preview</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Nimi Platform -->
+                    <article class="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
+                        <div class="gradient-border w-full md:max-w-[520px] overflow-hidden rounded-xl">
+                            <video class="videos scale-[1.03] w-full block transition-transform duration-500"
+                                src="videos/aqui.webm" width="1280" height="720" muted loop playsinline preload="metadata"
+                                aria-label="Nimi Platform demo"></video>
+                        </div>
+                        <div class="project-info reveal max-w-[460px] flex flex-col gap-3">
+                            <h3 class="text-[1.3rem] md:text-[1.5rem] font-bold" data-i18n="proj.nimi.title">Nimi Platform</h3>
+                            <ul class="flex flex-wrap gap-2">
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/laravel.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">Laravel</span></li>
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/tailwindcss.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">Tailwind</span></li>
+                                <li><span class="glass inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-bold"><img src="img/svgs/mysql.svg" alt="" class="h-3.5 w-3.5 opacity-70 invert">MySQL</span></li>
+                            </ul>
+                            <p class="md:text-[0.95rem] text-[0.85rem] text-gray-300 text-pretty" data-i18n="proj.nimi.body">Nimi is a dynamic eLearning platform that acts as a knowledge marketplace.</p>
+                        </div>
+                    </article>
+
+                </div>
             </div>
         </section>
 
-        <section id="about" class="bg-gray-800 bg-opacity-60 py-16">
-            <div class="max-w-[900px] w-[95%] m-auto mx-auto px-6">
-                <h2 class="text-center text-[2rem] font-bold mb-10">About Me</h2>
-                <div
-                    class="flex flex-col md:flex-row space-y-10 md:space-y-0 place-items-center md:space-x-20 justify-center">
-
-                    <div class="flex-none w-[200px] h-[200px] rounded-full overflow-hidden ">
-                        <img class="w-full h-full object-cover" style="object-position: 60% 20%;" alt="Foto de persona"
-                            src="img/foto2.png">
-                    </div>
-
-
-                    <div class="">
-
-                        <p class="aboutme text-pretty [&>span]:text-cyan-500">I am a <span>Full Stack</span> developer
-                            in training, currently studying Software <span>Analysis and Development</span>. During my
-                            studies, I have worked on several projects that have allowed me to develop skills in the
-                            design, development, and implementation of web applications. These projects have reinforced
-                            my ability to tackle complex problems, create innovative solutions, and work efficiently
-                            both on the frontend and the backend. <br><br>
-
-                            I am committed to continuous learning and always looking for opportunities that allow me to
-                            grow as a professional. I consider myself a person with a strong work <span>ethic</span>,
-                            <span>results-oriented</span>, with a great ability to adapt to new challenges and learn
-                            constantly. I value <span>effective communication</span> and <span>collaboration</span>,
-                            qualities that I apply in every project I get involved in, always seeking innovative
-                            solutions that meet user needs.
-                        </p>
-                    </div>
+        <section id="skills" class="py-20">
+            <div class="max-w-[1000px] w-[92%] m-auto">
+                <div class="flex justify-center items-center gap-2 font-bold text-[2rem] mb-14">
+                    <svg class="size-7 text-accent-violet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2 15 9l7 .5-5.5 4.5L18.5 21 12 17.3 5.5 21l2-7L2 9.5 9 9l3-7Z" />
+                    </svg>
+                    <h2 data-i18n="skills.heading">Skills</h2>
                 </div>
 
+                <div class="grid gap-6 md:grid-cols-2">
+                    <!-- Frontend -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-cyan" data-i18n="skills.frontend">Frontend</h3>
+                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            <div class="skill-chip reveal-child" style="--glow:#61DAFB"><img src="img/svgs/react.svg" alt="React" class="h-7 w-7"><span class="text-[0.7rem]">React</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/next.svg" alt="Next.js" class="h-7 w-7"><span class="text-[0.7rem]">Next.js</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#BC52EE"><img src="img/svgs/astro.svg" alt="Astro" class="h-7 w-7"><span class="text-[0.7rem]">Astro</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#DD0031"><img src="img/svgs/angular.svg" alt="Angular" class="h-7 w-7"><span class="text-[0.7rem]">Angular</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#4FC08D"><img src="img/svgs/vue.svg" alt="Vue" class="h-7 w-7"><span class="text-[0.7rem]">Vue</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#3178C6"><img src="img/svgs/ts.svg" alt="TypeScript" class="h-7 w-7"><span class="text-[0.7rem]">TypeScript</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F7DF1E"><img src="img/svgs/js.svg" alt="JavaScript" class="h-7 w-7"><span class="text-[0.7rem]">JavaScript</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#06B6D4"><img src="img/svgs/tailwindcss.svg" alt="Tailwind CSS" class="h-7 w-7"><span class="text-[0.7rem]">Tailwind</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#CC6699"><img src="img/svgs/sass.svg" alt="Sass" class="h-7 w-7"><span class="text-[0.7rem]">Sass</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#88CE02"><img src="img/svgs/gsap.svg" alt="GSAP" class="h-7 w-7"><span class="text-[0.7rem]">GSAP</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/threejs.svg" alt="Three.js" class="h-7 w-7"><span class="text-[0.7rem]">Three.js</span></div>
+                        </div>
+                    </div>
 
+                    <!-- Backend -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-violet" data-i18n="skills.backend">Backend</h3>
+                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            <div class="skill-chip reveal-child" style="--glow:#5FA04E"><img src="img/svgs/node.svg" alt="Node.js" class="h-7 w-7"><span class="text-[0.7rem]">Node.js</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E0234E"><img src="img/svgs/nestjs.svg" alt="NestJS" class="h-7 w-7"><span class="text-[0.7rem]">NestJS</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#6DB33F"><img src="img/svgs/spring.svg" alt="Spring Boot" class="h-7 w-7"><span class="text-[0.7rem]">Spring Boot</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#FF2D20"><img src="img/svgs/laravel.svg" alt="Laravel" class="h-7 w-7"><span class="text-[0.7rem]">Laravel</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/express.svg" alt="Express" class="h-7 w-7"><span class="text-[0.7rem]">Express</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#777BB4"><img src="img/svgs/php.svg" alt="PHP" class="h-7 w-7"><span class="text-[0.7rem]">PHP</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Integration & Middleware: la categoria diferenciadora, con borde de acento -->
+                    <div class="skills glass p-5 border-accent-cyan/30" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-cyan" data-i18n="skills.integration">Integration &amp; Middleware</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle Service Bus" class="h-7 w-7"><span class="text-[0.7rem] text-center">Service Bus</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle Integration Cloud" class="h-7 w-7"><span class="text-[0.7rem] text-center">Integration Cloud</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle Cloud Infrastructure" class="h-7 w-7"><span class="text-[0.7rem] text-center">OCI</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Databases -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-violet" data-i18n="skills.databases">Databases</h3>
+                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            <div class="skill-chip reveal-child" style="--glow:#4169E1"><img src="img/svgs/postgres.svg" alt="PostgreSQL" class="h-7 w-7"><span class="text-[0.7rem]">PostgreSQL</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle Database" class="h-7 w-7"><span class="text-[0.7rem]">Oracle</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#4479A1"><img src="img/svgs/mysql.svg" alt="MySQL" class="h-7 w-7"><span class="text-[0.7rem]">MySQL</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#47A248"><img src="img/svgs/mongo.svg" alt="MongoDB" class="h-7 w-7"><span class="text-[0.7rem]">MongoDB</span></div>
+                        </div>
+                    </div>
+
+                    <!-- DevOps & Tools -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-cyan" data-i18n="skills.devops">DevOps &amp; Tools</h3>
+                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            <div class="skill-chip reveal-child" style="--glow:#2496ED"><img src="img/svgs/docker.svg" alt="Docker" class="h-7 w-7"><span class="text-[0.7rem]">Docker</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#326CE5"><img src="img/svgs/kubernetes.svg" alt="Kubernetes" class="h-7 w-7"><span class="text-[0.7rem]">Kubernetes</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F05032"><img src="img/svgs/git.svg" alt="Git" class="h-7 w-7"><span class="text-[0.7rem]">Git</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/github.svg" alt="GitHub" class="h-7 w-7"><span class="text-[0.7rem]">GitHub</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#FC6D26"><img src="img/svgs/gitlab.svg" alt="GitLab" class="h-7 w-7"><span class="text-[0.7rem]">GitLab</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#0052CC"><img src="img/svgs/bitbucket.svg" alt="Bitbucket" class="h-7 w-7"><span class="text-[0.7rem]">Bitbucket</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#FF9900"><img src="img/svgs/aws.svg" alt="Amazon Web Services" class="h-7 w-7"><span class="text-[0.7rem]">AWS</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F24E1E"><img src="img/svgs/figma.svg" alt="Figma" class="h-7 w-7"><span class="text-[0.7rem]">Figma</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#087CFA"><img src="img/svgs/intellij.svg" alt="IntelliJ IDEA" class="h-7 w-7"><span class="text-[0.7rem] text-center">IntelliJ</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#2C2255"><img src="img/svgs/eclipse.svg" alt="Eclipse IDE" class="h-7 w-7"><span class="text-[0.7rem]">Eclipse</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle JDeveloper" class="h-7 w-7"><span class="text-[0.7rem] text-center">JDeveloper</span></div>
+                        </div>
+                    </div>
+
+                    <!-- AI Tooling -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-violet" data-i18n="skills.ai">AI Tooling</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/opencode.svg" alt="OpenCode" class="h-7 w-7"><span class="text-[0.7rem] text-center">OpenCode</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/mcp.svg" alt="Model Context Protocol" class="h-7 w-7"><span class="text-[0.7rem] text-center">MCP</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#D97757"><img src="img/svgs/claude.svg" alt="Claude Code" class="h-7 w-7"><span class="text-[0.7rem] text-center">Claude Code</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#22D3EE"><img src="img/svgs/prompt.svg" alt="Prompt and skill design" class="h-7 w-7"><span class="text-[0.7rem] text-center">Prompt Design</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <footer class="flex justify-around my-8 text-[0.8rem] text-gray-400">
-            <p>&copy; Jhoan Sebastian Alzate Franco</p>
-            <a class="hover:boder-b-white hover:border-b-[1px]" href="mailto:jhoans.alzatef@gmail.com">Contact</a>
-        </footer>
+        <section id="about" class="py-20">
+            <div class="max-w-[900px] w-[92%] m-auto">
+                <h2 class="text-center text-[2rem] font-bold mb-12" data-i18n="about.heading">About Me</h2>
+                <div class="flex flex-col md:flex-row gap-10 md:gap-16 items-center">
+
+                    <div class="about-photo flex-none w-[200px] h-[200px] rounded-full overflow-hidden">
+                        <img class="w-full h-full object-cover" src="img/about.webp"
+                            alt="Portrait of Jhoan Sebastian Alzate Franco"
+                            data-i18n-attr="alt:about.photoAlt" width="560" height="560" loading="lazy">
+                    </div>
+
+                    <p class="aboutme reveal text-pretty text-[0.95rem] leading-relaxed text-gray-300 [&>span]:text-accent-cyan [&>span]:font-semibold"
+                        data-i18n-html="about.body">
+                        I am a <span>software developer</span> with over a year and a half of experience orchestrating
+                        processes across systems for <span>banking, insurance and health</span>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <script src="dist/three.js"></script>
-    <script src="dist/gsap.js"></script>
-    <script src="dist/script.js"></script>
+    <footer class="border-t border-white/5 py-8">
+        <div class="max-w-[900px] w-[92%] m-auto flex flex-wrap justify-between gap-4 text-[0.8rem] text-gray-400">
+            <p>&copy; 2026 Jhoan Sebastian Alzate Franco</p>
+            <a class="transition-colors duration-300 hover:text-accent-cyan"
+                href="mailto:jhoans.alzatef@gmail.com" data-i18n="footer.contact">Contact</a>
+        </div>
+    </footer>
+
+    <script defer src="dist/background.js"></script>
+    <script defer src="dist/animations.js"></script>
+    <script defer src="dist/script.js"></script>
 </body>
 
 </html>
