@@ -166,6 +166,18 @@
     background: #22d3ee;
     border-color: #22d3ee;
   }
+
+  .about-photo {
+    position: relative;
+    padding: 3px;
+    background-image: linear-gradient(135deg, #22d3ee, #8b5cf6);
+    box-shadow: 0 0 40px -12px rgba(34, 211, 238, 0.5);
+  }
+
+  .about-photo img {
+    border-radius: 9999px;
+    filter: contrast(1.05) saturate(1.05);
+  }
 }
 
 @layer utilities {

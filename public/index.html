@@ -397,45 +397,32 @@
             </div>
         </section>
 
-        <section id="about" class="bg-gray-800 bg-opacity-60 py-16">
-            <div class="max-w-[900px] w-[95%] m-auto mx-auto px-6">
-                <h2 class="text-center text-[2rem] font-bold mb-10">About Me</h2>
-                <div
-                    class="flex flex-col md:flex-row space-y-10 md:space-y-0 place-items-center md:space-x-20 justify-center">
+        <section id="about" class="py-20">
+            <div class="max-w-[900px] w-[92%] m-auto">
+                <h2 class="text-center text-[2rem] font-bold mb-12" data-i18n="about.heading">About Me</h2>
+                <div class="flex flex-col md:flex-row gap-10 md:gap-16 items-center">
 
-                    <div class="flex-none w-[200px] h-[200px] rounded-full overflow-hidden ">
-                        <img class="w-full h-full object-cover" style="object-position: 60% 20%;" alt="Foto de persona"
-                            src="img/foto2.png">
+                    <div class="about-photo flex-none w-[200px] h-[200px] rounded-full overflow-hidden">
+                        <img class="w-full h-full object-cover" src="img/about.webp"
+                            alt="Portrait of Jhoan Sebastian Alzate Franco"
+                            data-i18n-attr="alt:about.photoAlt" width="560" height="560" loading="lazy">
                     </div>
 
-
-                    <div class="">
-
-                        <p class="aboutme text-pretty [&>span]:text-cyan-500">I am a <span>Full Stack</span> developer
-                            in training, currently studying Software <span>Analysis and Development</span>. During my
-                            studies, I have worked on several projects that have allowed me to develop skills in the
-                            design, development, and implementation of web applications. These projects have reinforced
-                            my ability to tackle complex problems, create innovative solutions, and work efficiently
-                            both on the frontend and the backend. <br><br>
-
-                            I am committed to continuous learning and always looking for opportunities that allow me to
-                            grow as a professional. I consider myself a person with a strong work <span>ethic</span>,
-                            <span>results-oriented</span>, with a great ability to adapt to new challenges and learn
-                            constantly. I value <span>effective communication</span> and <span>collaboration</span>,
-                            qualities that I apply in every project I get involved in, always seeking innovative
-                            solutions that meet user needs.
-                        </p>
-                    </div>
+                    <p class="aboutme reveal text-pretty text-[0.95rem] leading-relaxed text-gray-300 [&>span]:text-accent-cyan [&>span]:font-semibold"
+                        data-i18n-html="about.body">
+                        I am a <span>software developer</span> with over a year and a half of experience orchestrating
+                        processes across systems for <span>banking, insurance and health</span>.
+                    </p>
                 </div>
-
-
             </div>
         </section>
 
-        <footer class="flex justify-around my-8 text-[0.8rem] text-gray-400">
-            <p>&copy; Jhoan Sebastian Alzate Franco</p>
-            <a class="hover:border-b-white hover:border-b-[1px]" href="mailto:jhoans.alzatef@gmail.com"
-                data-i18n="footer.contact">Contact</a>
+        <footer class="border-t border-white/5 py-8">
+            <div class="max-w-[900px] w-[92%] m-auto flex flex-wrap justify-between gap-4 text-[0.8rem] text-gray-400">
+                <p>&copy; 2026 Jhoan Sebastian Alzate Franco</p>
+                <a class="transition-colors duration-300 hover:text-accent-cyan"
+                    href="mailto:jhoans.alzatef@gmail.com" data-i18n="footer.contact">Contact</a>
+            </div>
         </footer>
     </main>
 

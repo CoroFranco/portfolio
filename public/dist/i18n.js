@@ -77,6 +77,11 @@ const I18N = {
 
     'lang.label': 'Change language',
 
+    'about.heading': 'About Me',
+    'about.photoAlt': 'Portrait of Jhoan Sebastian Alzate Franco',
+    'about.body':
+      'I am a <span>software developer</span> with over a year and a half of experience orchestrating processes across systems for <span>banking, insurance and health</span>. I combine backend integrations — Oracle Service Bus, Oracle Integration Cloud, Node.js — with building clean, functional interfaces in <span>React</span>, always with an eye on scalability, maintainability and the quality of the final experience.<br><br>I studied Software Analysis and Development at SENA and completed Oracle Next Education’s Front-end React track. Day to day I work in Scrum teams, and I am currently building two healthcare portals: one for patients and one for healthcare professionals. I value <span>effective communication</span> and <span>collaboration</span>, and I am drawn to problems where a clean integration is the difference between a system that scales and one that does not.',
+
     'footer.contact': 'Contact',
   },
 
@@ -151,6 +156,11 @@ const I18N = {
     'skills.ai': 'Herramientas de IA',
 
     'lang.label': 'Cambiar idioma',
+
+    'about.heading': 'Sobre mí',
+    'about.photoAlt': 'Retrato de Jhoan Sebastian Alzate Franco',
+    'about.body':
+      'Soy <span>software developer</span> con más de un año y medio de experiencia orquestando procesos entre sistemas para <span>banca, seguros y salud</span>. Combino integraciones de backend — Oracle Service Bus, Oracle Integration Cloud, Node.js — con el desarrollo de interfaces limpias y funcionales en <span>React</span>, siempre con foco en escalabilidad, mantenimiento y calidad de la experiencia final.<br><br>Estudié Análisis y Desarrollo de Software en el SENA y completé el programa Front-end React de Oracle Next Education. Trabajo a diario en equipos con metodología Scrum y actualmente construyo dos portales del sector salud: uno para pacientes y otro para profesionales de la salud. Valoro la <span>comunicación efectiva</span> y la <span>colaboración</span>, y me atraen los problemas donde una integración bien hecha es la diferencia entre un sistema que escala y uno que no.',
 
     'footer.contact': 'Contacto',
   },
