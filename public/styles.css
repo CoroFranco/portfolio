@@ -37,8 +37,12 @@
     @apply bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-2xl;
   }
 
-  /* Estado inicial de todo lo que revela GSAP al hacer scroll */
-  .reveal {
+  /* Estado inicial de todo lo que revela GSAP al hacer scroll.
+     Sin JS no hay quien revele (ni siquiera llega a aplicarse `no-anim`,
+     que tambien la pone JS), asi que el estado por defecto debe ser
+     visible: el script inline del <head> marca <html class="js"> y solo
+     entonces se oculta. */
+  html.js .reveal {
     opacity: 0;
     transform: translateY(28px);
   }
@@ -213,7 +217,8 @@
     transition-duration: 0.01ms !important;
   }
 
-  .reveal {
+  /* Misma especificidad que la regla base y declarada despues: gana. */
+  html.js .reveal {
     opacity: 1;
     transform: none;
   }

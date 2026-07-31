@@ -592,9 +592,13 @@ body {
   backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 
-/* Estado inicial de todo lo que revela GSAP al hacer scroll */
+/* Estado inicial de todo lo que revela GSAP al hacer scroll.
+     Sin JS no hay quien revele (ni siquiera llega a aplicarse `no-anim`,
+     que tambien la pone JS), asi que el estado por defecto debe ser
+     visible: el script inline del <head> marca <html class="js"> y solo
+     entonces se oculta. */
 
-.reveal {
+html.js .reveal {
   opacity: 0;
   transform: translateY(28px);
 }
@@ -1124,9 +1128,9 @@ html[lang='en'] [data-lang-opt='en'],
   background-color: rgb(34 211 238 / 0.15);
 }
 
-.bg-gray-900 {
+.bg-ink {
   --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  background-color: rgb(5 5 16 / var(--tw-bg-opacity));
 }
 
 .bg-ink\/90 {
@@ -1442,7 +1446,9 @@ html.no-anim .timeline-progress {
     transition-duration: 0.01ms !important;
   }
 
-  .reveal {
+  /* Misma especificidad que la regla base y declarada despues: gana. */
+
+  html.js .reveal {
     opacity: 1;
     transform: none;
   }
