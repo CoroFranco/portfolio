@@ -17,6 +17,22 @@ const I18N = {
     'nav.about': 'About',
     'nav.contact': 'Contact',
 
+    'proj.heading': 'Projects',
+    'proj.code': 'Code',
+    'proj.preview': 'Preview',
+
+    'proj.midu.title': 'MiduGuard',
+    'proj.midu.body':
+      'An educational game that blends the border-management mechanics of Papers, Please with hands-on SQL learning. You play an immigration officer in Midulandia and verify each visitor’s data by writing real SQL queries in an interactive terminal. Over 50 characters with their own storyline, escalating difficulty across days, Clerk authentication and auto-saved progress with Zustand.',
+
+    'proj.artist.title': 'Portfolio, Gallery, Artist Page',
+    'proj.artist.body':
+      'Personal website of artist Felipe Franco, a space dedicated to showcasing his work and projects. Visitors can explore a full collection of his artistic output, including visual works, installations and collaborative projects.',
+
+    'proj.nimi.title': 'Nimi Platform',
+    'proj.nimi.body':
+      'Nimi is a dynamic eLearning platform that acts as a knowledge marketplace, letting anyone take part as a learner or a teacher. The goal is to make knowledge exchange easy and to promote continuous learning that is accessible to everyone.',
+
     'exp.heading': 'Experience',
     'exp.company': 'Cidenet',
     'exp.role': 'Development Analyst',
@@ -75,6 +91,22 @@ const I18N = {
     'nav.skills': 'Skills',
     'nav.about': 'Sobre mí',
     'nav.contact': 'Contacto',
+
+    'proj.heading': 'Proyectos',
+    'proj.code': 'Código',
+    'proj.preview': 'Ver demo',
+
+    'proj.midu.title': 'MiduGuard',
+    'proj.midu.body':
+      'Juego educativo que combina la mecánica de gestión de fronteras de Papers, Please con el aprendizaje práctico de SQL. Eres oficial de inmigración en Midulandia y verificas los datos de cada visitante escribiendo consultas SQL reales en una terminal interactiva. Más de 50 personajes con su propia historia, dificultad progresiva por días, autenticación con Clerk y guardado automático del progreso con Zustand.',
+
+    'proj.artist.title': 'Portafolio, Galería, Página de Artista',
+    'proj.artist.body':
+      'Sitio web personal del artista Felipe Franco, un espacio dedicado a mostrar su obra y sus proyectos. Permite explorar una colección completa de su trabajo artístico, incluyendo obras visuales, instalaciones y proyectos colaborativos.',
+
+    'proj.nimi.title': 'Nimi Platform',
+    'proj.nimi.body':
+      'Nimi es una plataforma dinámica de eLearning que funciona como un marketplace de conocimiento, donde cualquiera puede participar como estudiante o como profesor. El objetivo es facilitar el intercambio de conocimiento y promover un aprendizaje continuo y accesible para todos.',
 
     'exp.heading': 'Experiencia',
     'exp.company': 'Cidenet',
