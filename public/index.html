@@ -322,139 +322,93 @@
             </div>
         </section>
 
-        <section id="skills">
-            <div class="py-20 max-w-[600px] w-[95%] m-auto">
-                <h2 class="text-center text-[2rem] font-bold mb-20">Skills</h2>
-                <div class="md:grid md:grid-cols-2 ">
-
-                    <!--  inicio seccion de skills -->
-
-                    <div class="skills flex flex-col place-items-center space-y-10 mb-10">
-                        <h3 class="text-[2rem] text-[#eba4f3]">Frontend</h3>
-                        <div
-                            class=" grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div>
-                                <img src="./img/svgs/html.svg" alt="logo html">
-                                <p>html</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/js.svg" alt="logo js">
-                                <p>JavaScript</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/css.svg" alt="logo css">
-                                <p>Css</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/tailwindcss.svg" alt="logo tailwind">
-                                <p>tailwind</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/sass.svg" alt="logo sass">
-                                <p>Sass</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/astro.svg" alt="logo astro">
-                                <p>Astro</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Fin seccion skills -->
-
-                    <!--  inicio seccion de skills -->
-
-                    <div class="skills flex flex-col place-items-center space-y-10 mb-10">
-                        <h3 class="text-[2rem] text-[#a4e3f3]">Backend</h3>
-                        <div
-                            class="grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div class="">
-
-                                <img src="img/svgs/php.svg" alt="logo php">
-                                <p>php</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/node.svg" alt="logo node">
-                                <p>Node.js</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/laravel.svg" alt="logo laravel">
-                                <p>Laravel</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/express.svg" alt="logo express">
-                                <p>Express.js</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/mysql.svg" alt="logo mysql">
-                                <p>MySQL</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/mongo.svg" alt="logo mongo">
-                                <p>MongoDB</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fin seccion skills -->
-                    <!--  inicio seccion de skills -->
-
-                    <div class="skills flex flex-col place-items-center space-y-10 mb-10">
-                        <h3 class="text-[2rem] text-[#a4e3f3]">Learning</h3>
-                        <div
-                            class=" grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div>
-                                <img src="./img/svgs/react.svg" alt="logo react">
-                                <p>React</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/ts.svg" alt="logo ts">
-                                <p>TypeScript</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fin seccion skills -->
-                    <!--  inicio seccion de skills -->
-
-                    <div class="skills flex flex-col place-items-center space-y-10">
-                        <h3 class="text-[2rem] text-[#eba4f3]">Tools</h3>
-                        <div
-                            class=" grid grid-cols-3 gap-4 [&>div]:flex [&>div]:flex-col [&>div]:place-items-center [&>div]:gap-1">
-                            <div>
-                                <img src="./img/svgs/console.svg" alt="logo console">
-                                <p>Console</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/vsc.svg" alt="logo vsc">
-                                <p>VSC</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/git.svg" alt="logo git">
-                                <p>Git</p>
-                            </div>
-                            <div>
-                                <img src="img/svgs/github.svg" alt="logo github">
-                                <p>GitHub</p>
-                            </div>
-                            <div>
-
-                                <img src="img/svgs/figma.svg" alt="logo figma">
-                                <p>Figma</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fin seccion skills -->
-
+        <section id="skills" class="py-20">
+            <div class="max-w-[1000px] w-[92%] m-auto">
+                <div class="flex justify-center items-center gap-2 font-bold text-[2rem] mb-14">
+                    <svg class="size-7 text-accent-violet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2 15 9l7 .5-5.5 4.5L18.5 21 12 17.3 5.5 21l2-7L2 9.5 9 9l3-7Z" />
+                    </svg>
+                    <h2 data-i18n="skills.heading">Skills</h2>
                 </div>
 
+                <div class="grid gap-6 md:grid-cols-2">
+                    <!-- Frontend -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-cyan" data-i18n="skills.frontend">Frontend</h3>
+                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            <div class="skill-chip reveal-child" style="--glow:#61DAFB"><img src="img/svgs/react.svg" alt="React" class="h-7 w-7"><span class="text-[0.7rem]">React</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/next.svg" alt="Next.js" class="h-7 w-7"><span class="text-[0.7rem]">Next.js</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#BC52EE"><img src="img/svgs/astro.svg" alt="Astro" class="h-7 w-7"><span class="text-[0.7rem]">Astro</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#DD0031"><img src="img/svgs/angular.svg" alt="Angular" class="h-7 w-7"><span class="text-[0.7rem]">Angular</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#4FC08D"><img src="img/svgs/vue.svg" alt="Vue" class="h-7 w-7"><span class="text-[0.7rem]">Vue</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#3178C6"><img src="img/svgs/ts.svg" alt="TypeScript" class="h-7 w-7"><span class="text-[0.7rem]">TypeScript</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F7DF1E"><img src="img/svgs/js.svg" alt="JavaScript" class="h-7 w-7"><span class="text-[0.7rem]">JavaScript</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#06B6D4"><img src="img/svgs/tailwindcss.svg" alt="Tailwind CSS" class="h-7 w-7"><span class="text-[0.7rem]">Tailwind</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#CC6699"><img src="img/svgs/sass.svg" alt="Sass" class="h-7 w-7"><span class="text-[0.7rem]">Sass</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#88CE02"><img src="img/svgs/gsap.svg" alt="GSAP" class="h-7 w-7"><span class="text-[0.7rem]">GSAP</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/threejs.svg" alt="Three.js" class="h-7 w-7"><span class="text-[0.7rem]">Three.js</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Backend -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-violet" data-i18n="skills.backend">Backend</h3>
+                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            <div class="skill-chip reveal-child" style="--glow:#5FA04E"><img src="img/svgs/node.svg" alt="Node.js" class="h-7 w-7"><span class="text-[0.7rem]">Node.js</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E0234E"><img src="img/svgs/nestjs.svg" alt="NestJS" class="h-7 w-7"><span class="text-[0.7rem]">NestJS</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#6DB33F"><img src="img/svgs/spring.svg" alt="Spring Boot" class="h-7 w-7"><span class="text-[0.7rem]">Spring Boot</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#FF2D20"><img src="img/svgs/laravel.svg" alt="Laravel" class="h-7 w-7"><span class="text-[0.7rem]">Laravel</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/express.svg" alt="Express" class="h-7 w-7"><span class="text-[0.7rem]">Express</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#777BB4"><img src="img/svgs/php.svg" alt="PHP" class="h-7 w-7"><span class="text-[0.7rem]">PHP</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Integration & Middleware: la categoria diferenciadora, con borde de acento -->
+                    <div class="skills glass p-5 border-accent-cyan/30" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-cyan" data-i18n="skills.integration">Integration &amp; Middleware</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle Service Bus" class="h-7 w-7"><span class="text-[0.7rem] text-center">Service Bus</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle Integration Cloud" class="h-7 w-7"><span class="text-[0.7rem] text-center">Integration Cloud</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle Cloud Infrastructure" class="h-7 w-7"><span class="text-[0.7rem] text-center">OCI</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Databases -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-violet" data-i18n="skills.databases">Databases</h3>
+                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            <div class="skill-chip reveal-child" style="--glow:#4169E1"><img src="img/svgs/postgres.svg" alt="PostgreSQL" class="h-7 w-7"><span class="text-[0.7rem]">PostgreSQL</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle Database" class="h-7 w-7"><span class="text-[0.7rem]">Oracle</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#4479A1"><img src="img/svgs/mysql.svg" alt="MySQL" class="h-7 w-7"><span class="text-[0.7rem]">MySQL</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#47A248"><img src="img/svgs/mongo.svg" alt="MongoDB" class="h-7 w-7"><span class="text-[0.7rem]">MongoDB</span></div>
+                        </div>
+                    </div>
+
+                    <!-- DevOps & Tools -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-cyan" data-i18n="skills.devops">DevOps &amp; Tools</h3>
+                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                            <div class="skill-chip reveal-child" style="--glow:#2496ED"><img src="img/svgs/docker.svg" alt="Docker" class="h-7 w-7"><span class="text-[0.7rem]">Docker</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#326CE5"><img src="img/svgs/kubernetes.svg" alt="Kubernetes" class="h-7 w-7"><span class="text-[0.7rem]">Kubernetes</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F05032"><img src="img/svgs/git.svg" alt="Git" class="h-7 w-7"><span class="text-[0.7rem]">Git</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/github.svg" alt="GitHub" class="h-7 w-7"><span class="text-[0.7rem]">GitHub</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#FC6D26"><img src="img/svgs/gitlab.svg" alt="GitLab" class="h-7 w-7"><span class="text-[0.7rem]">GitLab</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#0052CC"><img src="img/svgs/bitbucket.svg" alt="Bitbucket" class="h-7 w-7"><span class="text-[0.7rem]">Bitbucket</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F24E1E"><img src="img/svgs/figma.svg" alt="Figma" class="h-7 w-7"><span class="text-[0.7rem]">Figma</span></div>
+                        </div>
+                    </div>
+
+                    <!-- AI Tooling -->
+                    <div class="skills glass p-5" data-stagger>
+                        <h3 class="mb-4 text-[1.05rem] font-bold text-accent-violet" data-i18n="skills.ai">AI Tooling</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/opencode.svg" alt="OpenCode" class="h-7 w-7"><span class="text-[0.7rem] text-center">OpenCode</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/mcp.svg" alt="Model Context Protocol" class="h-7 w-7"><span class="text-[0.7rem] text-center">MCP</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#22D3EE"><img src="img/svgs/prompt.svg" alt="Prompt and skill design" class="h-7 w-7"><span class="text-[0.7rem] text-center">Prompt Design</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 

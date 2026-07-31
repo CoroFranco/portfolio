@@ -51,6 +51,14 @@ const I18N = {
     'hero.linkedin': 'LinkedIn',
     'hero.photoAlt': 'Portrait of Jhoan Sebastian Alzate Franco',
 
+    'skills.heading': 'Skills',
+    'skills.frontend': 'Frontend',
+    'skills.backend': 'Backend',
+    'skills.databases': 'Databases',
+    'skills.integration': 'Integration & Middleware',
+    'skills.devops': 'DevOps & Tools',
+    'skills.ai': 'AI Tooling',
+
     'lang.label': 'Change language',
 
     'footer.contact': 'Contact',
@@ -101,6 +109,14 @@ const I18N = {
     'hero.cv': 'Descargar CV',
     'hero.linkedin': 'LinkedIn',
     'hero.photoAlt': 'Retrato de Jhoan Sebastian Alzate Franco',
+
+    'skills.heading': 'Skills',
+    'skills.frontend': 'Frontend',
+    'skills.backend': 'Backend',
+    'skills.databases': 'Bases de datos',
+    'skills.integration': 'Integración y Middleware',
+    'skills.devops': 'DevOps y Herramientas',
+    'skills.ai': 'Herramientas de IA',
 
     'lang.label': 'Cambiar idioma',
 

@@ -599,6 +599,57 @@ body {
   transform: translateY(28px);
 }
 
+.skill-chip {
+  border-radius: 1rem;
+  border-width: 1px;
+  border-color: rgb(255 255 255 / 0.1);
+  background-color: rgb(255 255 255 / 0.03);
+  --tw-backdrop-blur: blur(12px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  color: rgba(229, 231, 235, 0.7);
+}
+
+.skill-chip:hover {
+  color: var(--glow);
+  border-color: color-mix(in srgb, var(--glow) 45%, transparent);
+  box-shadow: 0 0 24px -6px var(--glow);
+  transform: translateY(-2px);
+}
+
+.skill-chip svg {
+  height: 1.75rem;
+  width: 1.75rem;
+  fill: currentColor;
+}
+
+/* Los SVG entran por <img>, fuera del arbol de color del documento.
+     Se normalizan a blanco tenue con brightness/invert y el hover
+     sube la opacidad y proyecta el glow de marca. */
+
+.skill-chip img {
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.skill-chip:hover img {
+  opacity: 1;
+  filter: brightness(0) invert(1) drop-shadow(0 0 6px var(--glow));
+}
+
 /* Borde de gradiente animado, activado en hover del contenedor */
 
 [data-lang-opt] {
@@ -750,10 +801,6 @@ html[lang='en'] [data-lang-opt='en'],
   margin-bottom: 0.5rem;
 }
 
-.mb-20 {
-  margin-bottom: 5rem;
-}
-
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -806,6 +853,10 @@ html[lang='en'] [data-lang-opt='en'],
   height: 1.75rem;
 }
 
+.h-7 {
+  height: 1.75rem;
+}
+
 .h-\[15px\] {
   height: 15px;
 }
@@ -824,6 +875,10 @@ html[lang='en'] [data-lang-opt='en'],
 
 .h-screen {
   height: 100vh;
+}
+
+.w-7 {
+  width: 1.75rem;
 }
 
 .w-\[200px\] {
@@ -846,6 +901,10 @@ html[lang='en'] [data-lang-opt='en'],
   width: 100%;
 }
 
+.max-w-\[1000px\] {
+  max-width: 1000px;
+}
+
 .max-w-\[1100px\] {
   max-width: 1100px;
 }
@@ -856,10 +915,6 @@ html[lang='en'] [data-lang-opt='en'],
 
 .max-w-\[500px\] {
   max-width: 500px;
-}
-
-.max-w-\[600px\] {
-  max-width: 600px;
 }
 
 .max-w-\[820px\] {
@@ -973,8 +1028,8 @@ html[lang='en'] [data-lang-opt='en'],
   gap: 0.75rem;
 }
 
-.gap-4 {
-  gap: 1rem;
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .space-x-0 > :not([hidden]) ~ :not([hidden]) {
@@ -1066,6 +1121,10 @@ html[lang='en'] [data-lang-opt='en'],
 
 .border-accent-cyan\/25 {
   border-color: rgb(34 211 238 / 0.25);
+}
+
+.border-accent-cyan\/30 {
+  border-color: rgb(34 211 238 / 0.3);
 }
 
 .border-white\/5 {
@@ -1258,19 +1317,14 @@ html[lang='en'] [data-lang-opt='en'],
   letter-spacing: 0.025em;
 }
 
-.text-\[\#a4e3f3\] {
-  --tw-text-opacity: 1;
-  color: rgb(164 227 243 / var(--tw-text-opacity));
-}
-
-.text-\[\#eba4f3\] {
-  --tw-text-opacity: 1;
-  color: rgb(235 164 243 / var(--tw-text-opacity));
-}
-
 .text-accent-cyan {
   --tw-text-opacity: 1;
   color: rgb(34 211 238 / var(--tw-text-opacity));
+}
+
+.text-accent-violet {
+  --tw-text-opacity: 1;
+  color: rgb(139 92 246 / var(--tw-text-opacity));
 }
 
 .text-cyan-500 {
@@ -1444,13 +1498,15 @@ html.no-anim .timeline-progress {
   color: rgb(34 211 238 / var(--tw-text-opacity));
 }
 
+@media (min-width: 640px) {
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 768px) {
   .md\:block {
     display: block;
-  }
-
-  .md\:grid {
-    display: grid;
   }
 
   .md\:grid-cols-2 {
@@ -1502,22 +1558,6 @@ html.no-anim .timeline-progress {
     --tw-scale-y: 1.05;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
-}
-
-.\[\&\>div\]\:flex>div {
-  display: flex;
-}
-
-.\[\&\>div\]\:flex-col>div {
-  flex-direction: column;
-}
-
-.\[\&\>div\]\:place-items-center>div {
-  place-items: center;
-}
-
-.\[\&\>div\]\:gap-1>div {
-  gap: 0.25rem;
 }
 
 .\[\&\>li\:hover\]\:-translate-y-\[2px\]>li:hover {

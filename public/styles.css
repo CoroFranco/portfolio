@@ -60,6 +60,20 @@
     fill: currentColor;
   }
 
+  /* Los SVG entran por <img>, fuera del arbol de color del documento.
+     Se normalizan a blanco tenue con brightness/invert y el hover
+     sube la opacidad y proyecta el glow de marca. */
+  .skill-chip img {
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+
+  .skill-chip:hover img {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 6px var(--glow));
+  }
+
   /* Borde de gradiente animado, activado en hover del contenedor */
   .gradient-border {
     position: relative;
