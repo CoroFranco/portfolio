@@ -446,6 +446,34 @@ video {
   display: none;
 }
 
+:root {
+  /* Color de marca del chip; cada chip lo sobreescribe inline */
+  --glow: #22d3ee;
+}
+
+body {
+  background-color: #050510;
+  /* Respaldo visible si WebGL no está disponible */
+  background-image:
+      radial-gradient(60% 50% at 20% 0%, rgba(34, 211, 238, 0.10), transparent 70%),
+      radial-gradient(50% 50% at 85% 15%, rgba(139, 92, 246, 0.12), transparent 70%),
+      radial-gradient(70% 60% at 50% 100%, rgba(99, 102, 241, 0.08), transparent 70%);
+  background-attachment: fixed;
+}
+
+:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+#background-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  display: block;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -554,6 +582,19 @@ video {
   --tw-contain-style:  ;
 }
 
+/* Estado inicial de todo lo que revela GSAP al hacer scroll */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* Borde de gradiente animado, activado en hover del contenedor */
+
+.visible {
+  visibility: visible;
+}
+
 .fixed {
   position: fixed;
 }
@@ -649,6 +690,10 @@ video {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
 .size-4 {
   width: 1rem;
   height: 1rem;
@@ -684,20 +729,12 @@ video {
   height: 100vh;
 }
 
-.h-\[100\%\] {
-  height: 100%;
-}
-
 .w-\[120px\] {
   width: 120px;
 }
 
 .w-\[200px\] {
   width: 200px;
-}
-
-.w-\[50px\] {
-  width: 50px;
 }
 
 .w-\[95\%\] {
@@ -716,12 +753,12 @@ video {
   max-width: 1100px;
 }
 
-.max-w-\[300px\] {
-  max-width: 300px;
-}
-
 .max-w-\[400px\] {
   max-width: 400px;
+}
+
+.max-w-\[500px\] {
+  max-width: 500px;
 }
 
 .max-w-\[600px\] {
@@ -732,16 +769,18 @@ video {
   max-width: 900px;
 }
 
-.max-w-\[500px\] {
-  max-width: 500px;
-}
-
 .flex-none {
   flex: none;
 }
 
 .grow {
   flex-grow: 1;
+}
+
+.scale-\[1\.03\] {
+  --tw-scale-x: 1.03;
+  --tw-scale-y: 1.03;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .scale-\[1\.5\] {
@@ -762,6 +801,10 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.resize {
+  resize: both;
 }
 
 .grid-cols-3 {
@@ -828,14 +871,6 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
-}
-
-.place-self-start {
-  place-self: start;
-}
-
-.self-start {
-  align-self: flex-start;
 }
 
 .overflow-hidden {
@@ -1003,6 +1038,10 @@ video {
   font-size: 0.9rem;
 }
 
+.text-\[1\.1rem\] {
+  font-size: 1.1rem;
+}
+
 .text-\[1\.2rem\] {
   font-size: 1.2rem;
 }
@@ -1011,32 +1050,12 @@ video {
   font-size: 1.3rem;
 }
 
-.text-\[1\.5rem\] {
-  font-size: 1.5rem;
-}
-
 .text-\[2\.5rem\] {
   font-size: 2.5rem;
 }
 
 .text-\[2rem\] {
   font-size: 2rem;
-}
-
-.text-\[1\.4rem\] {
-  font-size: 1.4rem;
-}
-
-.text-\[1rem\] {
-  font-size: 1rem;
-}
-
-.text-\[2\.7rem\] {
-  font-size: 2.7rem;
-}
-
-.text-\[1\.1rem\] {
-  font-size: 1.1rem;
 }
 
 .font-bold {
@@ -1123,9 +1142,42 @@ video {
   transition-timing-function: linear;
 }
 
-.skills svg:hover {
-  opacity: 0.8;
-  filter: brightness(1.2);
+/* Interruptor global de degradación: sin GSAP o con reduced-motion,
+     todo lo que dependía de una animación queda en su estado final. */
+
+html.no-anim .reveal,
+  html.no-anim .videos,
+  html.no-anim .linkedin,
+  html.no-anim .project-info,
+  html.no-anim .skills,
+  html.no-anim .aboutme,
+  html.no-anim #profesion,
+  html.no-anim #mainImage {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+html.no-anim .gradient-border:hover::before {
+  animation: none;
+}
+
+html.no-anim .timeline-progress {
+  height: 100% !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .hover\:border-b-\[1px\]:hover {
@@ -1188,20 +1240,16 @@ video {
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 
-  .md\:text-\[1\.5rem\] {
-    font-size: 1.5rem;
-  }
-
   .md\:text-\[0\.8rem\] {
     font-size: 0.8rem;
   }
 
-  .md\:text-\[1rem\] {
-    font-size: 1rem;
+  .md\:text-\[1\.5rem\] {
+    font-size: 1.5rem;
   }
 
-  .md\:text-\[1\.2rem\] {
-    font-size: 1.2rem;
+  .md\:text-\[1rem\] {
+    font-size: 1rem;
   }
 
   .md\:hover\:scale-105:hover {

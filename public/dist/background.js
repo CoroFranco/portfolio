@@ -1,13 +1,13 @@
- // Animacion bg
+// Placeholder migrado. La Task 4 reescribe este archivo por completo.
+function initBackground() {
+    const canvas = document.getElementById('background-canvas');
+    if (!canvas) return;
 
- function initBackground() {
-    const container = document.getElementById('background-container');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
 
     const particles = new THREE.BufferGeometry();
     const particleCount = 1500;

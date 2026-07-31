@@ -2,9 +2,129 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    /* Color de marca del chip; cada chip lo sobreescribe inline */
+    --glow: #22d3ee;
+  }
 
+  body {
+    background-color: #050510;
+    /* Respaldo visible si WebGL no está disponible */
+    background-image:
+      radial-gradient(60% 50% at 20% 0%, rgba(34, 211, 238, 0.10), transparent 70%),
+      radial-gradient(50% 50% at 85% 15%, rgba(139, 92, 246, 0.12), transparent 70%),
+      radial-gradient(70% 60% at 50% 100%, rgba(99, 102, 241, 0.08), transparent 70%);
+    background-attachment: fixed;
+  }
 
-.skills svg:hover {
-    opacity: 0.8;
-    filter: brightness(1.2);
+  :focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  #background-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    display: block;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-2xl;
+  }
+
+  /* Estado inicial de todo lo que revela GSAP al hacer scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  .skill-chip {
+    @apply glass flex flex-col items-center justify-center gap-2 px-3 py-4 transition-all duration-300;
+    color: rgba(229, 231, 235, 0.7);
+  }
+
+  .skill-chip:hover {
+    color: var(--glow);
+    border-color: color-mix(in srgb, var(--glow) 45%, transparent);
+    box-shadow: 0 0 24px -6px var(--glow);
+    transform: translateY(-2px);
+  }
+
+  .skill-chip svg {
+    @apply h-7 w-7;
+    fill: currentColor;
+  }
+
+  /* Borde de gradiente animado, activado en hover del contenedor */
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      #22d3ee,
+      #8b5cf6,
+      #6366f1,
+      #22d3ee
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: -1;
+  }
+
+  .gradient-border:hover::before {
+    opacity: 1;
+    animation: border-spin 4s linear infinite;
+  }
+}
+
+@layer utilities {
+  /* Interruptor global de degradación: sin GSAP o con reduced-motion,
+     todo lo que dependía de una animación queda en su estado final. */
+  html.no-anim .reveal,
+  html.no-anim .videos,
+  html.no-anim .linkedin,
+  html.no-anim .project-info,
+  html.no-anim .skills,
+  html.no-anim .aboutme,
+  html.no-anim #profesion,
+  html.no-anim #mainImage {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html.no-anim .gradient-border:hover::before {
+    animation: none;
+  }
+
+  html.no-anim .timeline-progress {
+    height: 100% !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
