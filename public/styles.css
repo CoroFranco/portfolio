@@ -47,6 +47,16 @@
     transform: translateY(28px);
   }
 
+  /* Mismo razonamiento para lo que anima `initHero` / `initProjectVideos`.
+     Antes llevaban la utilidad `opacity-0` en el marcado, que sin JS no
+     tenia quien la subiera: los dos botones del hero y los tres videos
+     quedaban invisibles para siempre. Ahora el estado oculto tambien
+     depende de `html.js`. */
+  html.js .linkedin,
+  html.js .videos {
+    opacity: 0;
+  }
+
   .skill-chip {
     @apply glass flex flex-col items-center justify-center gap-2 px-3 py-4 transition-all duration-300;
     color: rgba(229, 231, 235, 0.7);
@@ -187,14 +197,13 @@
 @layer utilities {
   /* Interruptor global de degradación: sin GSAP o con reduced-motion,
      todo lo que dependía de una animación queda en su estado final. */
-  /* `.project-info` y `.aboutme` ya llevan `.reveal` en el marcado, asi que
-     la primera linea los cubre. `.skills` no lleva `.reveal`: se conserva. */
+  /* Solo los tres selectores a los que el CSS baja de verdad la opacidad
+     (via `html.js`). `.project-info` y `.aboutme` ya llevan `.reveal`.
+     `.skills` y `#mainImage` no tenian ninguna regla que los ocultara, y
+     `#profesion` lleva `opacity-50` de diseño: forzarlo a 1 era un bug. */
   html.no-anim .reveal,
   html.no-anim .videos,
-  html.no-anim .linkedin,
-  html.no-anim .skills,
-  html.no-anim #profesion,
-  html.no-anim #mainImage {
+  html.no-anim .linkedin {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -217,8 +226,12 @@
     transition-duration: 0.01ms !important;
   }
 
-  /* Misma especificidad que la regla base y declarada despues: gana. */
-  html.js .reveal {
+  /* Misma especificidad que las reglas base y declaradas despues: ganan.
+     Red de seguridad puramente CSS, por si `animations.js` no llegara a
+     aplicar `no-anim`. */
+  html.js .reveal,
+  html.js .linkedin,
+  html.js .videos {
     opacity: 1;
     transform: none;
   }
