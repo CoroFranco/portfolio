@@ -88,6 +88,16 @@
     opacity: 1;
     animation: border-spin 4s linear infinite;
   }
+
+  [data-lang-opt] {
+    color: rgba(229, 231, 235, 0.45);
+  }
+
+  html[lang='en'] [data-lang-opt='en'],
+  html[lang='es'] [data-lang-opt='es'] {
+    background: linear-gradient(135deg, #22d3ee, #8b5cf6);
+    color: #050510;
+  }
 }
 
 @layer utilities {

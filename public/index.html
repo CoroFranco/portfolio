@@ -13,6 +13,25 @@
     <title>Jhoan Alzate Portfolio</title>
     <link rel="stylesheet" href="dist/output.css">
     <link rel="stylesheet" href="styles.css">
+
+    <meta name="description" content="Software developer with over a year and a half orchestrating processes across systems for banking, insurance and health.">
+    <meta name="theme-color" content="#050510">
+
+    <script>
+      // Fija el idioma en el elemento raiz antes de pintar, para que el CSS
+      // del toggle no arranque en el estado equivocado.
+      (function () {
+        var lang = 'en';
+        try {
+          var stored = localStorage.getItem('portfolio-lang');
+          if (stored === 'es' || stored === 'en') lang = stored;
+        } catch (e) { /* sin localStorage: queda el default */ }
+        document.documentElement.lang = lang;
+        document.documentElement.dataset.lang = lang;
+      })();
+    </script>
+    <script defer src="dist/i18n.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -21,15 +40,23 @@
 <body class="bg-gray-900 text-white overflow-x-hidden">
     <canvas id="background-canvas" aria-hidden="true"></canvas>
     <header id="nave" class="fixed z-50 top-0 left-0 w-full">
-        <nav class="nav flex bg-gray-900 bg-opacity-90 py-4">
+        <nav class="nav relative flex bg-ink/90 backdrop-blur-md py-4 border-b border-white/5">
             <ul
                 class="text-[1.1rem] flex justify-center m-auto md:space-x-3 [&>li:hover]:cursor-pointer [&>li:hover]:text-blue-400 [&>li:hover]:-translate-y-[2px] [&>li]:transition-transform [&>li>a]:md:px-4 [&>li>a]:px-2">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="mailto:jhoans.alzatef@gmail.com">Contact</a></li>
+                <li><a href="#home" data-i18n="nav.home">Home</a></li>
+                <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="#about" data-i18n="nav.about">About</a></li>
+                <li><a href="mailto:jhoans.alzatef@gmail.com" data-i18n="nav.contact">Contact</a></li>
             </ul>
+            <button id="lang-toggle" type="button"
+                class="absolute right-4 top-1/2 -translate-y-1/2 glass flex items-center gap-1 px-1 py-1 text-[0.7rem] font-bold tracking-wide"
+                aria-label="Change language" data-i18n-attr="aria-label:lang.label">
+                <span class="rounded-full px-2 py-0.5 transition-colors duration-200"
+                    data-lang-opt="en">EN</span>
+                <span class="rounded-full px-2 py-0.5 transition-colors duration-200"
+                    data-lang-opt="es">ES</span>
+            </button>
         </nav>
         <div id="menu-backdrop"
             class="-z-10 fixed  bg-white backdrop-blur-lg rounded left-[var(--left)] top-[var(--top)] w-[var(--width)] h-[var(--height)] transition-all duration-200 ease-linear">
@@ -49,14 +76,16 @@
                         <span class="relative inline-flex overflow-hidden rounded-full p-[1px]"> <span
                                 class="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_60deg_at_50%_50%,#6CADD9_0%,#21554E_50%,#6CCFD9_100%)] duration-700"></span>
                             <div
-                                class="inline-flex items-center justify-center w-full px-3 py-1 bg-transparent rounded-full cursor-pointer backdrop-blur-3xl whitespace-nowrap">
-                                Open to work</div>
+                                class="inline-flex items-center justify-center w-full px-3 py-1 bg-transparent rounded-full cursor-pointer backdrop-blur-3xl whitespace-nowrap"
+                                data-i18n="hero.badge">Open to work</div>
                         </span>
                     </div>
                 </a>
-                <h1 class="text-[2.5rem] font-bold md:block flex flex-col">Hey!, I'm <span id="typewriter"
-                        class="text-cyan-500"></span></h1>
-                <p id="profesion" class="text-[1.2rem] opacity-50 mb-4">Fullstack Developer</p>
+                <h1 class="text-[2.5rem] font-bold md:block flex flex-col">
+                    <span data-i18n="hero.greeting">Hey! I'm</span>
+                    <span id="typewriter" class="text-accent-cyan"></span>
+                </h1>
+                <p id="profesion" class="text-[1.2rem] opacity-50 mb-4" data-i18n="hero.role">Software Developer</p>
                 <a target="_blank" href="https://www.linkedin.com/in/coro-franco/"
                     class="linkedin opacity-0 bg-gray-700 px-4 py-1 rounded-xl mt-4 text-[0.9rem] flex w-[120px] gap-2 m-auto hover:text-black hover:bg-slate-300 place-items-center">
                     <svg class="" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -70,7 +99,7 @@
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" />
                     </svg>
-                    <span>Linkedln</span>
+                    <span data-i18n="hero.linkedin">LinkedIn</span>
                 </a>
             </div>
         </section>
@@ -372,7 +401,8 @@
 
         <footer class="flex justify-around my-8 text-[0.8rem] text-gray-400">
             <p>&copy; Jhoan Sebastian Alzate Franco</p>
-            <a class="hover:boder-b-white hover:border-b-[1px]" href="mailto:jhoans.alzatef@gmail.com">Contact</a>
+            <a class="hover:border-b-white hover:border-b-[1px]" href="mailto:jhoans.alzatef@gmail.com"
+                data-i18n="footer.contact">Contact</a>
         </footer>
     </main>
 
