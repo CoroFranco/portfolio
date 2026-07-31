@@ -12,12 +12,12 @@ const I18N = {
 
     'nav.home': 'Home',
     'nav.experience': 'Experience',
-    'nav.projects': 'Projects',
+    'nav.projects': 'Personal Projects',
     'nav.skills': 'Skills',
     'nav.about': 'About',
     'nav.contact': 'Contact',
 
-    'proj.heading': 'Projects',
+    'proj.heading': 'Personal Projects',
     'proj.code': 'Code',
     'proj.preview': 'Preview',
 
@@ -92,12 +92,12 @@ const I18N = {
 
     'nav.home': 'Inicio',
     'nav.experience': 'Experiencia',
-    'nav.projects': 'Proyectos',
+    'nav.projects': 'Proyectos personales',
     'nav.skills': 'Skills',
     'nav.about': 'Sobre mí',
     'nav.contact': 'Contacto',
 
-    'proj.heading': 'Proyectos',
+    'proj.heading': 'Proyectos personales',
     'proj.code': 'Código',
     'proj.preview': 'Ver demo',
 
