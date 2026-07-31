@@ -69,11 +69,6 @@
     transform: translateY(-2px);
   }
 
-  .skill-chip svg {
-    @apply h-7 w-7;
-    fill: currentColor;
-  }
-
   /* Los SVG entran por <img>, fuera del arbol de color del documento.
      Se normalizan a blanco tenue con brightness/invert y el hover
      sube la opacidad y proyecta el glow de marca. */
@@ -117,8 +112,19 @@
     animation: border-spin 4s linear infinite;
   }
 
+  /* El nav scrollea en horizontal por debajo de md: seis items no caben en
+     375px y quedaban debajo del toggle de idioma, que es `absolute right-4`.
+     El max-width le reserva ese hueco. */
+  .nav-list {
+    scrollbar-width: none;
+  }
+
+  .nav-list::-webkit-scrollbar {
+    display: none;
+  }
+
   [data-lang-opt] {
-    color: rgba(229, 231, 235, 0.45);
+    color: rgba(229, 231, 235, 0.7);
   }
 
   html[lang='en'] [data-lang-opt='en'],

@@ -36,6 +36,15 @@
       // lo revelaria).
       (function () {
         document.documentElement.classList.add('js');
+        // Failsafe: si dist/animations.js nunca llega (404, blip del CDN,
+        // extension) o lanza antes de marcar `anim-ready`, nadie agregaria
+        // `no-anim` y el contenido oculto bajo `html.js` quedaria invisible
+        // para siempre. Va antes del localStorage para que un throw ahi no
+        // pueda saltarselo.
+        setTimeout(function () {
+          var h = document.documentElement;
+          if (!h.classList.contains('anim-ready')) h.classList.add('no-anim');
+        }, 3000);
         var lang = 'en';
         try {
           var stored = localStorage.getItem('portfolio-lang');
@@ -47,9 +56,13 @@
     </script>
     <script defer src="dist/i18n.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Los siete scripts van con `defer`: no bloquean el paint y se ejecutan
+         en orden de documento, asi que gsap/ScrollTrigger/THREE siguen estando
+         definidos cuando corren background.js y animations.js. Deferir solo
+         algunos invertiria el orden y dejaria GSAP_READY en false. -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body class="bg-ink text-white overflow-x-hidden">
@@ -57,7 +70,7 @@
     <header id="nave" class="fixed z-50 top-0 left-0 w-full">
         <nav class="nav relative flex bg-ink/90 backdrop-blur-md py-4 border-b border-white/5">
             <ul
-                class="text-[1.1rem] flex justify-center m-auto md:space-x-3 [&>li:hover]:cursor-pointer [&>li:hover]:text-blue-400 [&>li:hover]:-translate-y-[2px] [&>li]:transition-transform [&>li>a]:md:px-4 [&>li>a]:px-2">
+                class="nav-list text-[0.8rem] md:text-[1.1rem] flex flex-nowrap justify-start md:justify-center m-auto max-w-[calc(100%-6rem)] md:max-w-none overflow-x-auto md:overflow-visible md:space-x-3 [&>li]:shrink-0 [&>li:hover]:cursor-pointer [&>li:hover]:text-blue-400 [&>li:hover]:-translate-y-[2px] [&>li]:transition-transform [&>li>a]:md:px-4 [&>li>a]:px-2 [&>li>a]:whitespace-nowrap">
                 <li><a href="#home" data-i18n="nav.home">Home</a></li>
                 <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
                 <li><a href="#projects" data-i18n="nav.projects">Personal Projects</a></li>
@@ -84,8 +97,8 @@
             <div class="text-center">
                 <div id="mainImage" class="flex-none w-[200px] h-[200px] rounded-full overflow-hidden m-auto mb-5">
                     <img class="w-full h-full object-cover" style="object-position: 73% 20%;"
-                        src="img/foto1.PNG" alt="Portrait of Jhoan Sebastian Alzate Franco"
-                        data-i18n-attr="alt:hero.photoAlt">
+                        src="img/hero.webp" alt="Portrait of Jhoan Sebastian Alzate Franco"
+                        data-i18n-attr="alt:hero.photoAlt" width="854" height="400">
                 </div>
                 <a href="https://www.linkedin.com/in/coro-franco/" target="_blank"
                     rel="noopener" class="flex items-center transition justify-center md:hover:scale-105 mb-5">
@@ -100,10 +113,10 @@
                 </a>
                 <h1 class="text-[2.5rem] font-bold md:block flex flex-col">
                     <span data-i18n="hero.greeting">Hey! I'm</span>
-                    <span id="typewriter" class="text-accent-cyan"></span>
+                    <span id="typewriter" class="text-accent-cyan">Jhoan Alzate</span>
                 </h1>
                 <p id="profesion" class="text-[1.2rem] opacity-50" data-i18n="hero.role">Software Developer</p>
-                <p class="mb-6 text-[0.85rem] text-white/40" data-i18n="hero.focus">
+                <p class="mb-6 text-[0.85rem] text-white/60" data-i18n="hero.focus">
                     Integrations &amp; Frontend · Banking, Insurance &amp; Health
                 </p>
 
@@ -149,7 +162,7 @@
                 <div class="reveal text-center mb-14">
                     <p class="text-[1.15rem] font-bold text-white/90"><span data-i18n="exp.role">Development Analyst</span>
                         · <span class="text-accent-cyan" data-i18n="exp.company">Cidenet</span></p>
-                    <p class="text-[0.85rem] text-white/40" data-i18n="exp.period">January 2025 – Present</p>
+                    <p class="text-[0.85rem] text-white/60" data-i18n="exp.period">January 2025 – Present</p>
                 </div>
 
                 <ol class="timeline-track" data-stagger>
@@ -158,7 +171,7 @@
                         <div class="glass p-5">
                             <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
                                 <h3 class="font-bold text-[1.05rem]" data-i18n="exp.ficohsa.client">Banco Ficohsa</h3>
-                                <span class="text-[0.75rem] text-white/40" data-i18n="exp.ficohsa.period">Jan 2025 – Oct 2025</span>
+                                <span class="text-[0.75rem] text-white/60" data-i18n="exp.ficohsa.period">Jan 2025 – Oct 2025</span>
                             </div>
                             <p class="text-[0.9rem] text-gray-300 text-pretty" data-i18n="exp.ficohsa.body">Design, development, testing and deployment of SOAP/REST flows and integrations for the bank's middle tier with Oracle Service Bus (OSB 11g/12c) and Oracle Integration Cloud (OIC), working in Scrum teams.</p>
                         </div>
@@ -169,7 +182,7 @@
                         <div class="glass p-5">
                             <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
                                 <h3 class="font-bold text-[1.05rem]" data-i18n="exp.sura.client">SURA</h3>
-                                <span class="text-[0.75rem] text-white/40" data-i18n="exp.sura.period">Oct 2025 – Dec 2025</span>
+                                <span class="text-[0.75rem] text-white/60" data-i18n="exp.sura.period">Oct 2025 – Dec 2025</span>
                             </div>
                             <p class="text-[0.9rem] text-gray-300 text-pretty" data-i18n="exp.sura.body">Migration of Oracle Forms as part of the modernization of internal applications.</p>
                         </div>
@@ -180,7 +193,7 @@
                         <div class="glass p-5">
                             <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
                                 <h3 class="font-bold text-[1.05rem]" data-i18n="exp.psf.client">PSF · Insurance project</h3>
-                                <span class="text-[0.75rem] text-white/40" data-i18n="exp.psf.period">Jan 2026 – Mar 2026</span>
+                                <span class="text-[0.75rem] text-white/60" data-i18n="exp.psf.period">Jan 2026 – Mar 2026</span>
                             </div>
                             <p class="text-[0.9rem] text-gray-300 text-pretty" data-i18n="exp.psf.body">Feature development for an insurance platform, with React on the frontend and Node.js on the backend. Data modeling and management in PostgreSQL, with services deployed via Docker.</p>
                         </div>
@@ -195,7 +208,7 @@
                                     <span class="rounded-full bg-accent-cyan/15 px-2 py-0.5 text-[0.65rem] font-bold text-accent-cyan"
                                         data-i18n="exp.now">Now</span>
                                 </h3>
-                                <span class="text-[0.75rem] text-white/40" data-i18n="exp.cysnet.period">Apr 2026 – Present</span>
+                                <span class="text-[0.75rem] text-white/60" data-i18n="exp.cysnet.period">Apr 2026 – Present</span>
                             </div>
                             <p class="text-[0.9rem] text-gray-300 text-pretty" data-i18n="exp.cysnet.body">Development with React of two healthcare web portals: one for patients and one for healthcare professionals. Collaboration on the design of clean, functional interfaces aligned with clinical care flows, and implementation of services.</p>
                         </div>
@@ -222,7 +235,7 @@
                     <article class="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
                         <div class="gradient-border w-full md:max-w-[520px] overflow-hidden rounded-xl">
                             <video class="videos scale-[1.03] w-full block transition-transform duration-500"
-                                src="videos/miduguard.webm" muted loop playsinline preload="metadata"
+                                src="videos/miduguard.webm" width="1000" height="492" muted loop playsinline preload="metadata"
                                 aria-label="MiduGuard gameplay"></video>
                         </div>
                         <div class="project-info reveal max-w-[460px] flex flex-col gap-3">
@@ -260,7 +273,7 @@
                     <article class="flex flex-col md:flex-row-reverse gap-6 md:gap-10 items-center">
                         <div class="gradient-border w-full md:max-w-[520px] overflow-hidden rounded-xl">
                             <video class="videos scale-[1.03] w-full block transition-transform duration-500"
-                                src="videos/este.webm" muted loop playsinline preload="metadata"
+                                src="videos/este.webm" width="1280" height="720" muted loop playsinline preload="metadata"
                                 aria-label="Artist page demo"></video>
                         </div>
                         <div class="project-info reveal max-w-[460px] flex flex-col gap-3">
@@ -295,7 +308,7 @@
                     <article class="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
                         <div class="gradient-border w-full md:max-w-[520px] overflow-hidden rounded-xl">
                             <video class="videos scale-[1.03] w-full block transition-transform duration-500"
-                                src="videos/aqui.webm" muted loop playsinline preload="metadata"
+                                src="videos/aqui.webm" width="1280" height="720" muted loop playsinline preload="metadata"
                                 aria-label="Nimi Platform demo"></video>
                         </div>
                         <div class="project-info reveal max-w-[460px] flex flex-col gap-3">
@@ -386,7 +399,11 @@
                             <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/github.svg" alt="GitHub" class="h-7 w-7"><span class="text-[0.7rem]">GitHub</span></div>
                             <div class="skill-chip reveal-child" style="--glow:#FC6D26"><img src="img/svgs/gitlab.svg" alt="GitLab" class="h-7 w-7"><span class="text-[0.7rem]">GitLab</span></div>
                             <div class="skill-chip reveal-child" style="--glow:#0052CC"><img src="img/svgs/bitbucket.svg" alt="Bitbucket" class="h-7 w-7"><span class="text-[0.7rem]">Bitbucket</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#FF9900"><img src="img/svgs/aws.svg" alt="Amazon Web Services" class="h-7 w-7"><span class="text-[0.7rem]">AWS</span></div>
                             <div class="skill-chip reveal-child" style="--glow:#F24E1E"><img src="img/svgs/figma.svg" alt="Figma" class="h-7 w-7"><span class="text-[0.7rem]">Figma</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#087CFA"><img src="img/svgs/intellij.svg" alt="IntelliJ IDEA" class="h-7 w-7"><span class="text-[0.7rem] text-center">IntelliJ</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#2C2255"><img src="img/svgs/eclipse.svg" alt="Eclipse IDE" class="h-7 w-7"><span class="text-[0.7rem]">Eclipse</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#F80000"><img src="img/svgs/oracle.svg" alt="Oracle JDeveloper" class="h-7 w-7"><span class="text-[0.7rem] text-center">JDeveloper</span></div>
                         </div>
                     </div>
 
@@ -396,6 +413,7 @@
                         <div class="grid grid-cols-3 gap-3">
                             <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/opencode.svg" alt="OpenCode" class="h-7 w-7"><span class="text-[0.7rem] text-center">OpenCode</span></div>
                             <div class="skill-chip reveal-child" style="--glow:#E5E7EB"><img src="img/svgs/mcp.svg" alt="Model Context Protocol" class="h-7 w-7"><span class="text-[0.7rem] text-center">MCP</span></div>
+                            <div class="skill-chip reveal-child" style="--glow:#D97757"><img src="img/svgs/claude.svg" alt="Claude Code" class="h-7 w-7"><span class="text-[0.7rem] text-center">Claude Code</span></div>
                             <div class="skill-chip reveal-child" style="--glow:#22D3EE"><img src="img/svgs/prompt.svg" alt="Prompt and skill design" class="h-7 w-7"><span class="text-[0.7rem] text-center">Prompt Design</span></div>
                         </div>
                     </div>
@@ -423,18 +441,19 @@
             </div>
         </section>
 
-        <footer class="border-t border-white/5 py-8">
-            <div class="max-w-[900px] w-[92%] m-auto flex flex-wrap justify-between gap-4 text-[0.8rem] text-gray-400">
-                <p>&copy; 2026 Jhoan Sebastian Alzate Franco</p>
-                <a class="transition-colors duration-300 hover:text-accent-cyan"
-                    href="mailto:jhoans.alzatef@gmail.com" data-i18n="footer.contact">Contact</a>
-            </div>
-        </footer>
     </main>
 
-    <script src="dist/background.js"></script>
-    <script src="dist/animations.js"></script>
-    <script src="dist/script.js"></script>
+    <footer class="border-t border-white/5 py-8">
+        <div class="max-w-[900px] w-[92%] m-auto flex flex-wrap justify-between gap-4 text-[0.8rem] text-gray-400">
+            <p>&copy; 2026 Jhoan Sebastian Alzate Franco</p>
+            <a class="transition-colors duration-300 hover:text-accent-cyan"
+                href="mailto:jhoans.alzatef@gmail.com" data-i18n="footer.contact">Contact</a>
+        </div>
+    </footer>
+
+    <script defer src="dist/background.js"></script>
+    <script defer src="dist/animations.js"></script>
+    <script defer src="dist/script.js"></script>
 </body>
 
 </html>
