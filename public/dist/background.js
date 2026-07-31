@@ -23,7 +23,14 @@ const VERT = `
 `;
 
 const FRAG = `
+  // highp es opcional en fragment shaders de WebGL1. Declararlo a secas
+  // sobreescribe el prefijo que Three.js inyecta segun las capacidades del
+  // GPU y el programa no compila donde no existe: aurora en negro.
+#ifdef GL_FRAGMENT_PRECISION_HIGH
   precision highp float;
+#else
+  precision mediump float;
+#endif
 
   varying vec2 vUv;
   uniform float uTime;
@@ -67,8 +74,11 @@ const FRAG = `
     float q = fbm(vec2(p.x * 2.2 + t, p.y * 1.1 - t * 1.6));
     float curtain = fbm(vec2(p.x * 3.4 + q * 1.4, p.y * 0.7 + t * 0.8));
 
-    // Banda difusa desplazada por la distorsion
-    float band = smoothstep(0.62, 0.10, abs(p.y - 0.10 + curtain * 0.45));
+    // Banda difusa desplazada por la distorsion.
+    // Edges en orden ascendente + inversion: smoothstep con edge0 > edge1
+    // es undefined en GLSL ES 1.0. 1.0 - smoothstep(lo, hi, x) es
+    // identico porque S(1-t) = 1 - S(t) para S(t) = t*t*(3-2t).
+    float band = 1.0 - smoothstep(0.10, 0.62, abs(p.y - 0.10 + curtain * 0.45));
     float glow = pow(band, 1.6) * (0.55 + 0.45 * curtain);
 
     vec3 base   = vec3(0.020, 0.020, 0.063);  // #050510
@@ -82,7 +92,7 @@ const FRAG = `
     col += indigo * pow(glow, 3.0) * 0.35;
 
     // Vineta
-    float vig = smoothstep(1.25, 0.25, length(p));
+    float vig = 1.0 - smoothstep(0.25, 1.25, length(p));
     col *= 0.55 + 0.45 * vig;
 
     gl_FragColor = vec4(col, 1.0);
@@ -140,6 +150,9 @@ function initBackground() {
   try {
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, alpha: false });
   } catch (err) {
+    // Sin esto, un CDN bloqueado (ReferenceError: THREE) es indistinguible
+    // de un equipo sin WebGL. No se relanza: el gradiente CSS es suficiente.
+    console.warn('background: WebGL unavailable', err);
     canvas.style.display = 'none';
     return;
   }
@@ -206,7 +219,12 @@ function initBackground() {
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -((e.clientY / window.innerHeight) * 2 - 1);
     }, { passive: true });
+  }
 
+  // scrollProgress solo lo consume el bloque de particulas. Sin ellas, el
+  // listener leeria scrollHeight (forced layout) en cada scroll sin poder
+  // cambiar un pixel, justo en el movil donde mas cuesta.
+  if (useParticles) {
     window.addEventListener('scroll', function () {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       scrollProgress = max > 0 ? window.scrollY / max : 0;
@@ -218,6 +236,8 @@ function initBackground() {
   function handleResize() {
     const w = window.innerWidth;
     const h = window.innerHeight;
+    // Arrastrar la ventana a un monitor con otro DPR cambia devicePixelRatio
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
