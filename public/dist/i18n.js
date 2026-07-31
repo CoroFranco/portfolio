@@ -17,6 +17,32 @@ const I18N = {
     'nav.about': 'About',
     'nav.contact': 'Contact',
 
+    'exp.heading': 'Experience',
+    'exp.company': 'Cidenet',
+    'exp.role': 'Development Analyst',
+    'exp.period': 'January 2025 – Present',
+    'exp.now': 'Now',
+
+    'exp.ficohsa.client': 'Banco Ficohsa',
+    'exp.ficohsa.period': 'Jan 2025 – Oct 2025',
+    'exp.ficohsa.body':
+      'Design, development, testing and deployment of SOAP/REST flows and integrations for the bank’s middle tier with Oracle Service Bus (OSB 11g/12c) and Oracle Integration Cloud (OIC), working in Scrum teams.',
+
+    'exp.sura.client': 'SURA',
+    'exp.sura.period': 'Oct 2025 – Dec 2025',
+    'exp.sura.body':
+      'Migration of Oracle Forms as part of the modernization of internal applications.',
+
+    'exp.psf.client': 'PSF · Insurance project',
+    'exp.psf.period': 'Jan 2026 – Mar 2026',
+    'exp.psf.body':
+      'Feature development for an insurance platform, with React on the frontend and Node.js on the backend. Data modeling and management in PostgreSQL, with services deployed via Docker.',
+
+    'exp.cysnet.client': 'CYSNET · MiTuSalud',
+    'exp.cysnet.period': 'Apr 2026 – Present',
+    'exp.cysnet.body':
+      'Development with React of two healthcare web portals: one for patients and one for healthcare professionals. Collaboration on the design of clean, functional interfaces aligned with clinical care flows, and implementation of services.',
+
     'hero.badge': 'Open to work',
     'hero.greeting': "Hey! I'm",
     'hero.role': 'Software Developer',
@@ -41,6 +67,32 @@ const I18N = {
     'nav.skills': 'Skills',
     'nav.about': 'Sobre mí',
     'nav.contact': 'Contacto',
+
+    'exp.heading': 'Experiencia',
+    'exp.company': 'Cidenet',
+    'exp.role': 'Analista de Desarrollo',
+    'exp.period': 'Enero 2025 – Actualidad',
+    'exp.now': 'Ahora',
+
+    'exp.ficohsa.client': 'Banco Ficohsa',
+    'exp.ficohsa.period': 'Ene 2025 – Oct 2025',
+    'exp.ficohsa.body':
+      'Diseño, desarrollo, pruebas y despliegue de flujos e integraciones SOAP/REST para la capa media del banco con Oracle Service Bus (OSB 11g/12c) y Oracle Integration Cloud (OIC), en equipos con metodología Scrum.',
+
+    'exp.sura.client': 'SURA',
+    'exp.sura.period': 'Oct 2025 – Dic 2025',
+    'exp.sura.body':
+      'Migración de formularios de Oracle Forms como parte de la modernización de aplicaciones internas.',
+
+    'exp.psf.client': 'PSF · Proyecto de seguros',
+    'exp.psf.period': 'Ene 2026 – Mar 2026',
+    'exp.psf.body':
+      'Desarrollo de funcionalidades para plataforma de seguros, con React en el frontend y Node.js en el backend. Modelado y gestión de datos en PostgreSQL, con despliegue de servicios mediante Docker.',
+
+    'exp.cysnet.client': 'CYSNET · Proyecto MiTuSalud',
+    'exp.cysnet.period': 'Abr 2026 – Actualidad',
+    'exp.cysnet.body':
+      'Desarrollo con React de dos portales web del sector salud: uno para pacientes y otro para profesionales de la salud. Colaboración en el diseño de interfaces limpias y funcionales alineadas a los flujos de atención médica e implementación de servicios.',
 
     'hero.badge': 'Disponible para trabajar',
     'hero.greeting': 'Hola, soy',

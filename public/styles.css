@@ -98,6 +98,60 @@
     background: linear-gradient(135deg, #22d3ee, #8b5cf6);
     color: #050510;
   }
+
+  .timeline-track {
+    position: relative;
+    padding-left: 2.25rem;
+    list-style: none;
+  }
+
+  /* Riel apagado, siempre visible */
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0.35rem;
+    bottom: 0.35rem;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Progreso de gradiente; la altura la anima GSAP con scrub */
+  .timeline-progress {
+    position: absolute;
+    left: 0.5rem;
+    top: 0.35rem;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, #22d3ee, #8b5cf6, #6366f1);
+    box-shadow: 0 0 12px -2px #22d3ee;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 1.75rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.25rem;
+    top: 1.4rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-left: 0.155rem;
+    border-radius: 9999px;
+    background: #0e0e1f;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .timeline-dot--active {
+    background: #22d3ee;
+    border-color: #22d3ee;
+  }
 }
 
 @layer utilities {

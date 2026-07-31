@@ -12,6 +12,7 @@ if (!GSAP_READY || PREFERS_REDUCED) {
   initReveals();
   initHero();
   initProjectVideos();
+  initTimeline();
 }
 
 // Revela cualquier elemento .reveal al entrar en viewport.
@@ -70,5 +71,28 @@ function initProjectVideos() {
       video.pause();
       video.currentTime = 0;
     });
+  });
+}
+
+// La linea de gradiente se dibuja al bajar y se recoge al subir.
+// El nodo se inyecta desde JS: sin animacion no tiene sentido mostrarlo,
+// y el riel apagado de ::before ya da la estructura visual.
+function initTimeline() {
+  const track = document.querySelector('.timeline-track');
+  if (!track) return;
+
+  const progress = document.createElement('div');
+  progress.className = 'timeline-progress';
+  track.appendChild(progress);
+
+  gsap.to(progress, {
+    scrollTrigger: {
+      trigger: track,
+      start: 'top 75%',
+      end: 'bottom 65%',
+      scrub: 0.6,
+    },
+    height: '100%',
+    ease: 'none',
   });
 }
